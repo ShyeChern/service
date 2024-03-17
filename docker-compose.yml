@@ -1,0 +1,10 @@
+services:
+  app:
+    build: .
+    container_name: service
+    command: npx nodemon --inspect=0.0.0.0:9000 -L src/index.js
+    ports:
+      - 5000:5000
+      - 9000:9000
+    volumes:
+      - .:/usr/src/app

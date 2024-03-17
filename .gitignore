@@ -1,0 +1,8 @@
+# Node build artifacts
+node_modules
+
+# Environment Files
+.env
+.env.*
+!.env.example
+
