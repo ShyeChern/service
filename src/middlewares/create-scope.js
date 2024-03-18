@@ -1,6 +1,6 @@
 const container = require('../container');
 
 module.exports = (req, res, next) => {
-	req.container = container.createScope();
+	req.container = container.cradle.createScope();
 	return next();
 };

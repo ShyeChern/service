@@ -8,6 +8,7 @@ const helmet = require('helmet');
 const compression = require('compression');
 const cookieParser = require('cookie-parser');
 const middlewares = require('./middlewares');
+const container = require('./container');
 const port = process.env.PORT;
 
 (async () => {
@@ -23,6 +24,8 @@ const port = process.env.PORT;
 	app.use(middlewares.auth);
 	app.use(require('./routes'));
 	app.use(middlewares.error);
+
+	await container.cradle.init();
 
 	app.listen(port, () => {
 		console.log(`Listening on port ${port}`);

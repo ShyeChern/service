@@ -6,14 +6,7 @@ module.exports = class UserController extends ControllerBase {
 		super();
 		this.userService = userService;
 		this.currentUser = currentUser;
-		console.log(currentUser);
 	}
-
-	// constructor(userService) {
-	// 	console.time('child');
-	// 	this.userService = userService;
-	// 	console.timeEnd('child');
-	// }
 
 	async getAll(req, res, next) {
 		try {

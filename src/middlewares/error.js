@@ -9,6 +9,7 @@ module.exports = (err, req, res, next) => {
 	}
 	const errorResponse = {
 		message: error[500],
+		requestId: req.container.cradle.requestId,
 	};
 	if (process.env.NODE_ENV !== 'production') errorResponse.devError = err.message;
 	return res.status(500).send(errorResponse);

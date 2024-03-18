@@ -1,9 +1,10 @@
 const { ErrorBase, ValidationError } = require('../../base/error');
 const ServiceBase = require('../../base/service');
 module.exports = class UserService extends ServiceBase {
-	constructor(userRepository) {
+	constructor(userRepository, log) {
 		super();
 		this.userRepository = userRepository;
+		this.log = log;
 	}
 
 	async get(params) {
@@ -18,6 +19,7 @@ module.exports = class UserService extends ServiceBase {
 		// throw new Error('qwe');
 		// throw new ValidationError([{ message: '' }]);
 		// throw new ErrorBase('some message');
+		this.log('qwe', 'asd');
 		const result = await this.userRepository.getAll(query);
 		return {
 			data: result,
