@@ -1,9 +1,8 @@
 const Base = require('./base');
 
 module.exports = class ControllerBase extends Base {
-	constructor(model) {
-		super();
-		console.log(model);
+	constructor(opts) {
+		super(opts);
 	}
 
 	async getAll(req, res, next) {

@@ -5,7 +5,7 @@ const { error } = require('../constants');
 module.exports = (err, req, res, next) => {
 	req.container.cradle.log(err);
 	if (err instanceof ErrorBase || err instanceof ValidationError) {
-		return res.status(err.statusCode).send({ message: err.message, error: err.errors });
+		return res.status(err.statusCode).send({ message: err.message, errors: err.errors });
 	}
 	const errorResponse = {
 		message: error[500],

@@ -20,7 +20,7 @@ TODO:
 - files middleware
 - cache GET request
 - base class
-- shell script to create template
+- script to create template use pluralrize
 - minimize crud code
 - validator
 - tokens

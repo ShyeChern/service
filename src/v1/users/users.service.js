@@ -1,10 +1,9 @@
 const { ErrorBase, ValidationError } = require('../../base/error');
 const ServiceBase = require('../../base/service');
 module.exports = class UserService extends ServiceBase {
-	constructor(userRepository, log) {
-		super();
-		this.userRepository = userRepository;
-		this.log = log;
+	constructor(opts) {
+		super(opts);
+		this.userRepository = opts.userRepository;
 	}
 
 	async get(params) {

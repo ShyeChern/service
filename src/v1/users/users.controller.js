@@ -1,23 +1,18 @@
 const ControllerBase = require('../../base/controller');
-
+const userValidator = require('./users.validator');
 const Joi = require('joi');
+
 module.exports = class UserController extends ControllerBase {
-	constructor(userService, currentUser) {
-		super();
-		this.userService = userService;
-		this.currentUser = currentUser;
+	constructor(opts) {
+		super(opts);
+		this.userService = opts.userService;
 	}
 
 	async getAll(req, res, next) {
 		try {
 			// todo: super.getAll then pass all required thing?
-			const schema = Joi.object({
-				limit: Joi.number().integer(),
-				offset: Joi.number().integer(),
-				otherData: Joi.boolean(),
-			});
-			const data = schema.validate(req.query);
-			const user = await this.userService.getAll(req.query);
+			const data = await this.validate(userValidator.getAll, req.query);
+			const user = await this.userService.getAll(data);
 			return res.send(user);
 		} catch (err) {
 			next(err);

@@ -17,7 +17,7 @@ const init = () => {
 };
 
 const createScope = () => {
-	return () => {
+	return (req) => {
 		const requestId = v4();
 		const scope = container.createScope();
 		const log = function () {
@@ -27,6 +27,7 @@ const createScope = () => {
 			currentUser: asValue({}),
 			log: asFunction(() => log).scoped(),
 			requestId: asValue(requestId),
+			t: asFunction(() => req.__).scoped(),
 		});
 		return scope;
 	};
@@ -34,18 +35,17 @@ const createScope = () => {
 
 const container = createContainer({
 	strict: true,
-	injectionMode: InjectionMode.CLASSIC,
+	injectionMode: InjectionMode.PROXY,
 });
 
 container.loadModules(
 	[
 		['./src/*/*/*.controller.js', { register: asClass, lifetime: Lifetime.SCOPED }],
 		['./src/*/*/*.service.js', { register: asClass, lifetime: Lifetime.SCOPED }],
-		['./src/*/*/*.repository.js', { register: asClass, lifetime: Lifetime.SINGLETON }],
+		['./src/*/*/*.repository.js', { register: asClass, lifetime: Lifetime.SCOPED }],
 	],
 	{
 		formatName: (name, descriptor) => {
-			if (name.includes('controller')) return descriptor.value.name;
 			return stringHelper.toCamelCase(descriptor.value.name);
 		},
 	},

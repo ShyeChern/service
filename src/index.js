@@ -18,6 +18,7 @@ const port = process.env.PORT;
 	app.use(express.urlencoded({ extended: true }));
 	app.use(express.json());
 	app.use(compression());
+	app.use(middlewares.i18n);
 	app.use(middlewares.createScope);
 	app.use(middlewares.logger);
 	app.use(cookieParser(process.env.COOKIE_SIGNAGURE));

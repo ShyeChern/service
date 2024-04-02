@@ -1,5 +1,3 @@
-const { error } = require('../constants');
-
 class ErrorBase extends Error {
 	constructor(message, statusCode, error) {
 		super(message);
@@ -9,8 +7,8 @@ class ErrorBase extends Error {
 }
 
 class ValidationError extends Error {
-	constructor(errors) {
-		super(error.VALIDATION_ERROR);
+	constructor(message, errors) {
+		super(message);
 		this.errors = errors;
 		this.statusCode = 400;
 	}
