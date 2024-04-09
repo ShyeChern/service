@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const datas = [require('./users/users.route')];
+const datas = [require('./auth/auth.route'), require('./users/users.route')];
 
 const handler = (controller, methodName) => {
 	return function (req, res, next) {

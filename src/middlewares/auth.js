@@ -1,11 +1,35 @@
 const { asValue } = require('awilix');
+const ErrorBase = require('../base/error');
+const { error, cache } = require('../constants');
 
-module.exports = (req, res, next) => {
-	console.log('TODO: auth');
-	const user = { someinfo: '123', id: Math.floor(Math.random() * 100) };
-	req.container.register({
-		currentUser: asValue(user),
-	});
-	console.log(req.container.cradle.currentUser);
+module.exports = async (req, res, next) => {
+	const whitelistUrl = {
+		'/api/v1/auth/login': true,
+	};
+
+	if (whitelistUrl[req.path]) return next();
+
+	if (!req.headers.authorization) {
+		return next(new ErrorBase(req.__('error.unauthorized'), 401));
+	}
+
+	try {
+		const token = req.headers.authorization.replace('Bearer ', '');
+		let user = req.container.cradle.authService.verifyToken(token);
+		user = await req.container.cradle.userRepository.get({ user });
+		user.access = req.container.cradle.cache.get(cache.ROLE)[user.role];
+		req.container.register({
+			currentUser: asValue(user),
+		});
+		req.container.cradle.userRepository.currentUser = user;
+	} catch (e) {
+		req.container.cradle.log(e);
+		const params = {
+			statusCode: 401,
+		};
+		if (e.name === 'TokenExpiredError') params.code = error.TOKEN_EXPIRED;
+
+		return next(new ErrorBase(req.__('error.unauthorized'), params));
+	}
 	return next();
 };

@@ -11,13 +11,20 @@ module.exports = class ErrorBase extends Error {
 			return;
 		}
 
+		if (typeof params === 'string') {
+			this.setCode(params);
+			this.setStatusCode(400);
+			return;
+		}
+
 		if (typeof params === 'number') {
 			this.setStatusCode(params);
 			return;
 		}
 
-		this.setStatusCode(params.statusCode);
-		this.setErrors(params.errors);
+		this.setStatusCode(params?.statusCode ?? 400);
+		this.setErrors(params?.errors);
+		this.setCode(params?.code);
 	}
 
 	setStatusCode(statusCode) {
@@ -26,5 +33,9 @@ module.exports = class ErrorBase extends Error {
 
 	setErrors(errors) {
 		this.errors = errors;
+	}
+
+	setCode(code) {
+		this.code = code;
 	}
 };

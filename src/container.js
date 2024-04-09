@@ -9,9 +9,14 @@ const {
 const { logger } = require('./utils');
 const { stringHelper } = require('./utils');
 const { v4 } = require('uuid');
+const { cache } = require('./constants');
+const NodeCache = require('node-cache');
 
 const init = () => {
 	return async () => {
+		const appCache = new NodeCache();
+		appCache.set(cache.ROLE, {});
+		container.register({ cache: asValue(appCache) });
 		console.log('init app');
 	};
 };

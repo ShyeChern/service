@@ -1,4 +1,5 @@
 const ErrorBase = require('./error');
+const { error: errorCode } = require('../constants');
 module.exports = class Base {
 	constructor(opts) {
 		this.currentUser = opts.currentUser;
@@ -34,6 +35,6 @@ module.exports = class Base {
 				return acc;
 			}, ''),
 		}));
-		throw new ErrorBase(this.t('validation.error'), errors);
+		throw new ErrorBase(this.t('validation.error'), { code: errorCode.VALIDATION_ERROR, errors });
 	}
 };

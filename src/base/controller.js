@@ -20,4 +20,8 @@ module.exports = class ControllerBase extends Base {
 			next(err);
 		}
 	}
+
+	async checkAccess() {
+		// TODO: check access func
+	}
 };
