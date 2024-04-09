@@ -1,14 +1,13 @@
-const { ErrorBase, ValidationError } = require('../base/error');
-const { error } = require('../constants');
+const ErrorBase = require('../base/error');
 
 // eslint-disable-next-line no-unused-vars
 module.exports = (err, req, res, next) => {
 	req.container.cradle.log(err);
-	if (err instanceof ErrorBase || err instanceof ValidationError) {
+	if (err instanceof ErrorBase) {
 		return res.status(err.statusCode).send({ message: err.message, errors: err.errors });
 	}
 	const errorResponse = {
-		message: error[500],
+		message: req.__('error.serverError'),
 		requestId: req.container.cradle.requestId,
 	};
 	if (process.env.NODE_ENV !== 'production') errorResponse.devError = err.message;

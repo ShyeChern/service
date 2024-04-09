@@ -1,6 +1,5 @@
 const ControllerBase = require('../../base/controller');
 const userValidator = require('./users.validator');
-const Joi = require('joi');
 
 module.exports = class UserController extends ControllerBase {
 	constructor(opts) {

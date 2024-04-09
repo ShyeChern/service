@@ -2,7 +2,7 @@ const { I18n } = require('i18n');
 const path = require('path');
 const fs = require('fs');
 
-const namespaces = ['common', 'validation'];
+const namespaces = ['common', 'validation', 'error'];
 const locales = ['en', 'cn'];
 const staticCatalog = {};
 for (const locale of locales) {

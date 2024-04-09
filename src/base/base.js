@@ -1,4 +1,4 @@
-const { ValidationError } = require('./error');
+const ErrorBase = require('./error');
 module.exports = class Base {
 	constructor(opts) {
 		this.currentUser = opts.currentUser;
@@ -13,10 +13,6 @@ module.exports = class Base {
 				wrap: {
 					label: false,
 				},
-			},
-			messages: {
-				cn: { 'object.unknown': '{:#label} some error' },
-				'object.unknown': 'FIELD_NOT_ALLOWED',
 			},
 			...options,
 		};
@@ -38,6 +34,6 @@ module.exports = class Base {
 				return acc;
 			}, ''),
 		}));
-		throw new ValidationError(this.t('common.test'), errors);
+		throw new ErrorBase(this.t('validation.error'), errors);
 	}
 };
