@@ -30,3 +30,6 @@ TODO:
 thunder client
 https://github.com/rangav/thunder-client-support
 https://github.com/rangav/thunder-client-support/blob/master/docs/tc-types.d.ts
+
+jest test only specific file(s) (match regex pattern)
+npm test -- tests/utils/security.test.js

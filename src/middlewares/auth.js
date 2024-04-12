@@ -1,6 +1,7 @@
 const { asValue } = require('awilix');
 const ErrorBase = require('../base/error');
 const { error, cache } = require('../constants');
+const { security } = require('../utils');
 
 module.exports = async (req, res, next) => {
 	const whitelistUrl = {
@@ -15,7 +16,7 @@ module.exports = async (req, res, next) => {
 
 	try {
 		const token = req.headers.authorization.replace('Bearer ', '');
-		let user = req.container.cradle.authService.verifyToken(token);
+		let user = security.verifyToken(token);
 		user = await req.container.cradle.userRepository.get({ user });
 		user.access = req.container.cradle.cache.get(cache.ROLE)[user.role];
 		req.container.register({

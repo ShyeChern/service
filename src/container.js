@@ -6,8 +6,7 @@ const {
 	Lifetime,
 	asFunction,
 } = require('awilix');
-const { logger } = require('./utils');
-const { stringHelper } = require('./utils');
+const { logger, string } = require('./utils');
 const { v4 } = require('uuid');
 const { cache } = require('./constants');
 const NodeCache = require('node-cache');
@@ -51,7 +50,7 @@ container.loadModules(
 	],
 	{
 		formatName: (name, descriptor) => {
-			return stringHelper.toCamelCase(descriptor.value.name);
+			return string.toCamelCase(descriptor.value.name);
 		},
 	},
 );

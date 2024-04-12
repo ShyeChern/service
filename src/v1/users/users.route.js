@@ -1,8 +1,8 @@
 const UserController = require('./users.controller');
-const { stringHelper } = require('../../utils');
+const { string } = require('../../utils');
 
 module.exports = {
-	name: stringHelper.toCamelCase(UserController.name),
+	name: string.toCamelCase(UserController.name),
 	routes: [
 		{
 			path: '/users',

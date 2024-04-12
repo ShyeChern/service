@@ -1,8 +1,8 @@
 const AuthController = require('./auth.controller');
-const { stringHelper } = require('../../utils');
+const { string } = require('../../utils');
 
 module.exports = {
-	name: stringHelper.toCamelCase(AuthController.name),
+	name: string.toCamelCase(AuthController.name),
 	routes: [
 		{
 			path: '/auth/login',

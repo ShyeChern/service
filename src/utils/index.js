@@ -1,7 +1,9 @@
-const stringHelper = require('./string-helper');
+const string = require('./string');
 const logger = require('./logger');
+const security = require('./security');
 
 module.exports = {
-	stringHelper,
+	string,
 	logger,
+	security,
 };
