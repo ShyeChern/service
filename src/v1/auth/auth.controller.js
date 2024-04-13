@@ -5,7 +5,6 @@ module.exports = class AuthController extends ControllerBase {
 	constructor(opts) {
 		super(opts);
 		this.authService = opts.authService;
-		this.userService = opts.userService;
 	}
 
 	async login(req, res, next) {

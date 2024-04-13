@@ -8,9 +8,14 @@ module.exports = class AuthService extends ServiceBase {
 		this.userRepository = opts.userRepository;
 	}
 
-	async login() {
+	async login(data) {
 		const user = await this.userRepository.get({});
 		if (!user) {
+			throw new BaseError(this.t('user.invalidCredential'));
+		}
+
+		const userPassword = Buffer.from(data.password, 'base64').toString('utf-8');
+		if (!security.compareHash(userPassword, user.password)) {
 			throw new BaseError(this.t('user.invalidCredential'));
 		}
 

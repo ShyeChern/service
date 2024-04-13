@@ -1,4 +1,6 @@
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
+
 const { app } = require('../constants');
 
 module.exports.generateToken = (payload, options = {}) => {
@@ -30,4 +32,16 @@ module.exports.verifyToken = (token, options = {}) => {
 	return payload;
 };
 
-// TODO: scrypt
+module.exports.hash = (text) => {
+	const salt = crypto.randomBytes(16).toString('hex');
+	const hash = crypto.scryptSync(text, salt, 64).toString('hex');
+	return `${hash}:${salt}`;
+};
+
+module.exports.compareHash = (text, hashed) => {
+	const [hash, salt] = hashed.split(':');
+	if (!hash || !salt) return false;
+	const hashedText = crypto.scryptSync(text, salt, 64);
+	const result = crypto.timingSafeEqual(hashedText, Buffer.from(hash, 'hex'));
+	return result;
+};
