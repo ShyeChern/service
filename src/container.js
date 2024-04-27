@@ -10,12 +10,14 @@ const { logger, string } = require('./utils');
 const { v4 } = require('uuid');
 const { cache } = require('./constants');
 const NodeCache = require('node-cache');
+const database = require('./databases');
 
-const init = () => {
+const init = (opts) => {
 	return async () => {
+		const mongodb = await database.init(opts);
 		const appCache = new NodeCache();
 		appCache.set(cache.ROLE, {});
-		container.register({ cache: asValue(appCache) });
+		container.register({ cache: asValue(appCache), mongodb: asValue(mongodb) });
 		console.log('init app');
 	};
 };
@@ -47,9 +49,11 @@ container.loadModules(
 		['./src/*/*/*.controller.js', { register: asClass, lifetime: Lifetime.SCOPED }],
 		['./src/*/*/*.service.js', { register: asClass, lifetime: Lifetime.SCOPED }],
 		['./src/*/*/*.repository.js', { register: asClass, lifetime: Lifetime.SCOPED }],
+		['./src/*/*/*.model.js', { register: asValue, lifetime: Lifetime.SINGLETON }],
 	],
 	{
 		formatName: (name, descriptor) => {
+			if (name.includes('.model')) return name;
 			return string.toCamelCase(descriptor.value.name);
 		},
 	},

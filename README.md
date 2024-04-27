@@ -20,6 +20,8 @@ TODO:
 - cookie
 - role access, save role in token get role details on init and compare, if updated set in container globally
 - db
+- db migration seeder
+- concurrency update
 
 thunder client
 https://github.com/rangav/thunder-client-support

@@ -11,7 +11,6 @@ module.exports = class UserService extends ServiceBase {
 	}
 
 	async getAll(query) {
-		this.log('qwe', 'asd');
 		const result = await this.userRepository.getAll(query);
 		return {
 			data: result,
@@ -20,6 +19,7 @@ module.exports = class UserService extends ServiceBase {
 	}
 
 	async create(data) {
-		return await this.userRepository.create(data);
+		const result = await this.userRepository.create(data);
+		return { id: result.id };
 	}
 };
