@@ -9,7 +9,7 @@ module.exports = class AuthController extends ControllerBase {
 
 	async login(req, res, next) {
 		try {
-			const data = await this.validate(authValidator.login, req.body);
+			const data = await super.validate(authValidator.login, req.body);
 			const result = await this.authService.login(data);
 			return res.send(result);
 		} catch (err) {

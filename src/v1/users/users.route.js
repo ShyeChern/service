@@ -12,6 +12,8 @@ module.exports = {
 		{
 			path: '/users/:id',
 			get: [UserController.prototype.get.name],
+			patch: [UserController.prototype.update.name],
+			delete: [UserController.prototype.delete.name],
 		},
 	],
 };

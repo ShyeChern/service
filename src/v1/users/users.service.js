@@ -1,4 +1,5 @@
 const ServiceBase = require('../../base/service');
+
 module.exports = class UserService extends ServiceBase {
 	constructor(opts) {
 		super(opts);
@@ -20,6 +21,16 @@ module.exports = class UserService extends ServiceBase {
 
 	async create(data) {
 		const result = await this.userRepository.create(data);
+		return { id: result.id };
+	}
+
+	async update(id, data) {
+		const result = await this.userRepository.update({ _id: id }, data);
+		return { id: result.id };
+	}
+
+	async delete(data) {
+		const result = await this.userRepository.delete(data);
 		return { id: result.id };
 	}
 };

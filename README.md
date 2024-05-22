@@ -22,6 +22,11 @@ TODO:
 - db
 - db migration seeder
 - concurrency update
+- common utils remove duplicates, sort etc (another package maybe)
+- cronjob
+- k8s setup
+- action log queue from db
+- db transaction
 
 thunder client
 https://github.com/rangav/thunder-client-support

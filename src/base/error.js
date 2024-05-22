@@ -1,3 +1,4 @@
+const { app } = require('../constants');
 module.exports = class ErrorBase extends Error {
 	constructor(message, params) {
 		super(message);
@@ -7,13 +8,13 @@ module.exports = class ErrorBase extends Error {
 	processParams(params) {
 		if (Array.isArray(params)) {
 			this.setErrors(params);
-			this.setStatusCode(400);
+			this.setStatusCode(app.BAD_REQUEST);
 			return;
 		}
 
 		if (typeof params === 'string') {
 			this.setCode(params);
-			this.setStatusCode(400);
+			this.setStatusCode(app.BAD_REQUEST);
 			return;
 		}
 
@@ -22,7 +23,7 @@ module.exports = class ErrorBase extends Error {
 			return;
 		}
 
-		this.setStatusCode(params?.statusCode ?? 400);
+		this.setStatusCode(params?.statusCode ?? app.BAD_REQUEST);
 		this.setErrors(params?.errors);
 		this.setCode(params?.code);
 	}

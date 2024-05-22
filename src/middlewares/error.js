@@ -1,4 +1,5 @@
 const ErrorBase = require('../base/error');
+const { app } = require('../constants');
 
 // eslint-disable-next-line no-unused-vars
 module.exports = (err, req, res, next) => {
@@ -13,5 +14,5 @@ module.exports = (err, req, res, next) => {
 		requestId: req.container.cradle.requestId,
 	};
 	if (process.env.NODE_ENV !== 'production') errorResponse.devError = err.message;
-	return res.status(500).send(errorResponse);
+	return res.status(app.INTERNAL_SERVER_ERROR).send(errorResponse);
 };

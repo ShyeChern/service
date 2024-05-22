@@ -1,5 +1,6 @@
 const ErrorBase = require('./error');
 const { error: errorCode } = require('../constants');
+
 module.exports = class Base {
 	constructor(opts) {
 		this.currentUser = opts.currentUser;
