@@ -5,6 +5,10 @@ module.exports = class ServiceBase extends Base {
 		super(opts);
 	}
 
+	async checkConcurrency(oldValue, newValue) {
+		console.log(oldValue, newValue);
+	}
+
 	async delete(data) {
 		console.log(data);
 	}

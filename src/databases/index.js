@@ -19,12 +19,15 @@ module.exports.init = async (opts) => {
 
 		if (model.author !== false) {
 			custom.author = true;
-			model.schema.add({ createdBy: String, updatedBy: String });
+			model.schema.add({
+				createdBy: { id: String, name: String },
+				updatedBy: { id: String, name: String },
+			});
 		}
 
 		if (model.paranoid !== false) {
 			custom.paranoid = true;
-			model.schema.add({ deletedAt: Date, deletedBy: String });
+			model.schema.add({ deletedAt: Date, deletedBy: { id: String, name: String } });
 		}
 
 		for (const index of model.compoundIndexes ?? []) {
