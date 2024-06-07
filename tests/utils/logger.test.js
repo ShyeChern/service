@@ -1,6 +1,8 @@
-const { logger } = require('../../src/utils');
+const { logger: Logger } = require('../../src/utils');
 
 describe('utils/logger', () => {
+	const requestId = 'unitTest';
+	const logger = new Logger({ requestId });
 	let spyFunc;
 	const infoOne = 'unit test one';
 	const infoTwo = 'unit test two';
@@ -10,15 +12,16 @@ describe('utils/logger', () => {
 	});
 
 	test('should generate console info', () => {
-		logger.log(infoOne, infoTwo);
+		logger.info(infoOne, infoTwo);
 		expect(spyFunc).toHaveBeenCalled();
 	});
 
 	test('should generate correct info', () => {
-		const [outputOne, outputTwo, outputThree] = spyFunc.mock.calls[0];
-		expect(new Date(outputOne)).toBeInstanceOf(Date);
-		expect(outputTwo).toBe(infoOne);
-		expect(outputThree).toBe(infoTwo);
+		const output = spyFunc.mock.calls[0];
+		expect(new Date(output[0])).toBeInstanceOf(Date);
+		expect(output[1]).toBe(requestId);
+		expect(output[2]).toBe(infoOne);
+		expect(output[3]).toBe(infoTwo);
 	});
 
 	afterAll(() => {

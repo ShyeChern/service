@@ -8,7 +8,7 @@ module.exports = (err, req, res, next) => {
 			.status(err.statusCode)
 			.send({ message: err.message, code: err.code, errors: err.errors });
 	}
-	req.container.cradle.log('error middleware', err);
+	req.container.cradle.logger.error('error middleware', err);
 	const errorResponse = {
 		message: req.__('error.serverError'),
 		requestId: req.container.cradle.requestId,

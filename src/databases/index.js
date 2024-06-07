@@ -6,7 +6,14 @@ const { initMiddleware } = require('./middlewares');
 module.exports.init = async (opts) => {
 	const mongodb = await mongoose.createConnection(process.env.MONGODB_URL).asPromise();
 
-	mongodb.set('debug', process.env.NODE_ENV !== 'production');
+	if (process.env.NODE_ENV !== 'production') {
+		mongoose.set('debug', function (collectionName, methodName, ...methodArgs) {
+			delete methodArgs[2]?.audit;
+			console.log(
+				`Mongoose: ${collectionName}.${methodName}(${methodArgs.map(JSON.stringify).join(', ')})`,
+			);
+		});
+	}
 
 	for (let model of models) {
 		model = opts[model.name];

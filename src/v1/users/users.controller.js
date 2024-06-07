@@ -48,7 +48,7 @@ module.exports = class UserController extends ControllerBase {
 
 	async delete(req, res, next) {
 		try {
-			const user = await this.userService.delete(req.body);
+			const user = await this.userService.delete(req.params.id);
 			return res.send(user);
 		} catch (err) {
 			next(err);

@@ -11,10 +11,10 @@ const QUERY = {
 		}
 
 		const update = this.getUpdate();
-		if (custom.author && update) {
+		if (custom.author && update && !options.isDelete) {
 			const author = {
-				id: options.currentUser?.id,
-				name: options.currentUser?.name,
+				id: options.currentUser.id,
+				name: options.currentUser.name,
 			};
 			update.updatedBy = author;
 			update.$setOnInsert.createdBy = author;
@@ -39,8 +39,8 @@ const DOCUMENT = {
 		const options = this.$__.saveOptions;
 		if (custom.author) {
 			const author = {
-				id: options.currentUser?.id,
-				name: options.currentUser?.name,
+				id: options.currentUser.id,
+				name: options.currentUser.name,
 			};
 			this.updatedBy = author;
 			this.createdBy = author;
@@ -48,7 +48,7 @@ const DOCUMENT = {
 		return next();
 	},
 	post: function (doc, next) {
-		// TODO: audit.create(doc) // doc.toJSON(), doc.collection.name
+		this.$__.saveOptions.audit.create(doc, this.$__.saveOptions);
 		return next();
 	},
 };
@@ -56,8 +56,10 @@ const DOCUMENT = {
 const AGGREGATE = {
 	pre: function (next) {
 		const custom = this._model.schema.options.custom;
-		const options = this.options;
-		this.pipeline().unshift({ $match: { deletedAt: { $eq: null } } });
+		// const options = this.options;
+		if (custom.paranoid) {
+			this.pipeline().unshift({ $match: { deletedAt: { $eq: null } } });
+		}
 		return next();
 	},
 };
@@ -65,9 +67,22 @@ const AGGREGATE = {
 const MODEL = {
 	pre: function (next, data, options) {
 		const custom = this.schema.options.custom;
+		if (custom.author) {
+			const author = {
+				id: options.currentUser.id,
+				name: options.currentUser.name,
+			};
+
+			for (const value of data) {
+				value.updatedBy = author;
+				value.createdBy = author;
+			}
+		}
+		this.options = options;
 		return next();
 	},
-	post: function (next, data, options) {
+	post: function (data, next) {
+		this.options.audit.create(data, this.options);
 		return next();
 	},
 };
@@ -80,11 +95,9 @@ module.exports.initMiddleware = (model) => {
 	// TODO: delete
 	schema.pre('save', DOCUMENT.pre);
 	schema.post('save', DOCUMENT.post);
-
 	schema.pre('insertMany', MODEL.pre);
 	schema.post('insertMany', MODEL.post);
-	schema.pre('bulkWrite', MODEL.pre);
-	schema.post('bulkWrite', MODEL.post);
+
 	schema.pre('aggregate', AGGREGATE.pre);
 
 	return model;

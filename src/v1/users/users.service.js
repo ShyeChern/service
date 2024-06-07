@@ -9,7 +9,6 @@ module.exports = class UserService extends ServiceBase {
 	}
 
 	async get(params) {
-		console.log(params);
 		const user = await this.userRepository.get(params);
 		if (!user) throw new ErrorBase(this.t('usernotfound'), app.NOT_FOUND);
 		return user;
@@ -36,8 +35,8 @@ module.exports = class UserService extends ServiceBase {
 		return { id };
 	}
 
-	async delete(data) {
-		const result = await this.userRepository.delete(data);
+	async delete(id) {
+		const result = await this.userRepository.delete({ _id: id });
 		return { id: result._id };
 	}
 };

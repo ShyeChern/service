@@ -24,7 +24,7 @@ module.exports = async (req, res, next) => {
 		});
 		req.container.cradle.userRepository.currentUser = user;
 	} catch (err) {
-		req.container.cradle.log(err);
+		req.container.cradle.logger.info(err);
 
 		if (err instanceof ErrorBase) return next(err);
 

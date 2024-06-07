@@ -4,8 +4,8 @@ const { error: errorCode } = require('../constants');
 module.exports = class Base {
 	constructor(opts) {
 		this.currentUser = opts.currentUser;
-		this.t = opts.t;
-		this.log = opts.log;
+		this.t = opts.req.__;
+		this.logger = opts.logger;
 	}
 
 	async validate(schema, data, options = {}) {

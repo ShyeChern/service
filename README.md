@@ -19,7 +19,7 @@ TODO:
 - minimize crud code
 - cookie
 - role access, save role in token get role details on init and compare, if updated set in container globally
-- db
+- db audit
 - db migration seeder
 - concurrency update
 - common utils remove duplicates, sort etc (another package maybe)

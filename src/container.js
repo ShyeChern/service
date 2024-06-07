@@ -6,7 +6,7 @@ const {
 	Lifetime,
 	asFunction,
 } = require('awilix');
-const { logger, string } = require('./utils');
+const { string } = require('./utils');
 const { v4 } = require('uuid');
 const { cache } = require('./constants');
 const NodeCache = require('node-cache');
@@ -26,14 +26,10 @@ const createScope = () => {
 	return (req) => {
 		const requestId = v4();
 		const scope = container.createScope();
-		const log = function () {
-			logger.log.call(null, requestId, ...arguments);
-		};
 		scope.register({
 			currentUser: asValue({}),
-			log: asFunction(() => log).scoped(),
 			requestId: asValue(requestId),
-			t: asFunction(() => req.__).scoped(),
+			req: asValue(req),
 		});
 		return scope;
 	};
@@ -50,6 +46,8 @@ container.loadModules(
 		['./src/*/*/*.service.js', { register: asClass, lifetime: Lifetime.SCOPED }],
 		['./src/*/*/*.repository.js', { register: asClass, lifetime: Lifetime.SCOPED }],
 		['./src/*/*/*.model.js', { register: asValue, lifetime: Lifetime.SINGLETON }],
+		['./src/utils/logger.js', { register: asClass, lifetime: Lifetime.SCOPED }],
+		['./src/databases/audit.js', { register: asClass, lifetime: Lifetime.SCOPED }],
 	],
 	{
 		formatName: (name, descriptor) => {
