@@ -1,26 +1,21 @@
-module.exports = {
-	env: {
-		browser: true,
-		commonjs: true,
-		es2021: true,
-		node: true,
+const globals = require('globals');
+const pluginJs = require('@eslint/js');
+
+module.exports = [
+	{ files: ['**/*.js'], languageOptions: { sourceType: 'commonjs' } },
+	{ languageOptions: { globals: { ...globals.browser, ...globals.node } } },
+	pluginJs.configs.recommended,
+	{
+		files: ['tests/**/*'],
+		languageOptions: { globals: globals.jest },
 	},
-	extends: 'eslint:recommended',
-	parserOptions: {
-		ecmaVersion: 2022,
-	},
-	rules: {
-		indent: ['error', 'tab'],
-		'linebreak-style': ['error', 'unix'],
-		quotes: ['error', 'single'],
-		semi: ['error', 'always'],
-	},
-	overrides: [
-		{
-			files: ['tests/**/*'],
-			env: {
-				jest: true,
-			},
+	{
+		rules: {
+			indent: ['error', 'tab'],
+			'linebreak-style': ['error', 'unix'],
+			quotes: ['error', 'single'],
+			semi: ['error', 'always'],
+			'prefer-const': 'error',
 		},
-	],
-};
+	},
+];
