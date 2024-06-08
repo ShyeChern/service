@@ -1,6 +1,12 @@
 const app = {
 	NAME: 'service',
 
+	ACTION: {
+		CREATE: 'CREATE',
+		UPDATE: 'UPDATE',
+		DELETE: 'DELETE',
+	},
+
 	CREATED: 201,
 	BAD_REQUEST: 400,
 	UNAUTHORIZED: 401,

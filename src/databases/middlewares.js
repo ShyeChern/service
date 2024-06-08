@@ -1,3 +1,4 @@
+const auditModel = require('../v1/audits/audit.model');
 const QUERY = {
 	pre: async function (next) {
 		const custom = this.schema.options.custom;
@@ -18,9 +19,11 @@ const QUERY = {
 			};
 			update.updatedBy = author;
 			update.$setOnInsert.createdBy = author;
-
-			// this.oldValue = await this.model.find(filter, {}, { lean: true, skipMiddleware: true });
 		}
+
+		if (update || options.isDelete)
+			this.prevValues = await this.model.find(filter, {}, { lean: true, skipMiddleware: true });
+
 		return next();
 	},
 	post: function (result, next) {
@@ -28,7 +31,8 @@ const QUERY = {
 
 		if (options.skipMiddleware) return next();
 
-		// TODO: audit.update(this, this.oldValue, result)
+		if (options.isDelete) options.auditService.deleteLog(this, this.prevValues);
+		else options.auditService.updateLog(this, this.prevValues);
 		return next();
 	},
 };
@@ -37,6 +41,7 @@ const DOCUMENT = {
 	pre: function (next) {
 		const custom = this.constructor.schema.options.custom;
 		const options = this.$__.saveOptions;
+
 		if (custom.author) {
 			const author = {
 				id: options.currentUser.id,
@@ -48,7 +53,11 @@ const DOCUMENT = {
 		return next();
 	},
 	post: function (doc, next) {
-		this.$__.saveOptions.audit.create(doc, this.$__.saveOptions);
+		if (this.constructor.modelName === auditModel.name) return next();
+
+		const options = this.$__.saveOptions;
+		options.auditService.createLog(doc, options);
+
 		return next();
 	},
 };
@@ -82,7 +91,7 @@ const MODEL = {
 		return next();
 	},
 	post: function (data, next) {
-		this.options.audit.create(data, this.options);
+		this.options.auditService.createLog(data, this.options);
 		return next();
 	},
 };
@@ -92,7 +101,9 @@ module.exports.initMiddleware = (model) => {
 	schema.pre(/^find/, QUERY.pre);
 	schema.pre(/^update/, QUERY.pre);
 	schema.post(/^update/, QUERY.post);
-	// TODO: delete
+	schema.pre(/^delete/, QUERY.pre);
+	schema.post(/^delete/, QUERY.post);
+
 	schema.pre('save', DOCUMENT.pre);
 	schema.post('save', DOCUMENT.post);
 	schema.pre('insertMany', MODEL.pre);

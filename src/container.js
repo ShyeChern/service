@@ -47,7 +47,6 @@ container.loadModules(
 		['./src/*/*/*.repository.js', { register: asClass, lifetime: Lifetime.SCOPED }],
 		['./src/*/*/*.model.js', { register: asValue, lifetime: Lifetime.SINGLETON }],
 		['./src/utils/logger.js', { register: asClass, lifetime: Lifetime.SCOPED }],
-		['./src/databases/audit.js', { register: asClass, lifetime: Lifetime.SCOPED }],
 	],
 	{
 		formatName: (name, descriptor) => {
