@@ -68,7 +68,7 @@ module.exports = class RepositoryBase extends Base {
 					deletedAt: new Date().toISOString(),
 					deletedBy: {
 						id: this.currentUser.id,
-						name: this.currentUser.name,
+						username: this.currentUser.username,
 					},
 				},
 				options,

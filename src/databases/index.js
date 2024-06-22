@@ -28,14 +28,14 @@ module.exports.init = async (opts) => {
 		if (model.author !== false) {
 			custom.author = true;
 			model.schema.add({
-				createdBy: { id: String, name: String },
-				updatedBy: { id: String, name: String },
+				createdBy: { id: String, username: String },
+				updatedBy: { id: String, username: String },
 			});
 		}
 
 		if (model.paranoid !== false) {
 			custom.paranoid = true;
-			model.schema.add({ deletedAt: Date, deletedBy: { id: String, name: String } });
+			model.schema.add({ deletedAt: Date, deletedBy: { id: String, username: String } });
 		}
 
 		for (const index of model.compoundIndexes ?? []) {

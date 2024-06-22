@@ -15,7 +15,7 @@ const QUERY = {
 		if (custom.author && update && !options.isDelete) {
 			const author = {
 				id: options.currentUser.id,
-				name: options.currentUser.name,
+				username: options.currentUser.username,
 			};
 			update.updatedBy = author;
 			update.$setOnInsert.createdBy = author;
@@ -45,7 +45,7 @@ const DOCUMENT = {
 		if (custom.author) {
 			const author = {
 				id: options.currentUser.id,
-				name: options.currentUser.name,
+				username: options.currentUser.username,
 			};
 			this.updatedBy = author;
 			this.createdBy = author;
@@ -79,7 +79,7 @@ const MODEL = {
 		if (custom.author) {
 			const author = {
 				id: options.currentUser.id,
-				name: options.currentUser.name,
+				username: options.currentUser.username,
 			};
 
 			for (const value of data) {
