@@ -36,3 +36,7 @@ jest test only specific file(s) (match regex pattern)
 npm test -- tests/utils/security.test.js
 
 npx eslint
+
+https://www.npmjs.com/package/npm-check-updates
+npx npm-check-updates
+ncu -u

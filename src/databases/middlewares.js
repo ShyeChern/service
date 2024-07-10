@@ -1,4 +1,4 @@
-const auditModel = require('../v1/audits/audit.model');
+const auditModel = require('../v1/audits/audits.model');
 const QUERY = {
 	pre: async function (next) {
 		const custom = this.schema.options.custom;
@@ -21,8 +21,9 @@ const QUERY = {
 			update.$setOnInsert.createdBy = author;
 		}
 
-		if (update || options.isDelete)
+		if (update || options.isDelete) {
 			this.prevValues = await this.model.find(filter, {}, { lean: true, skipMiddleware: true });
+		}
 
 		return next();
 	},

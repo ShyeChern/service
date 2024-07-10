@@ -44,8 +44,9 @@ module.exports = class RepositoryBase extends Base {
 	}
 
 	async update(filter, data, options = {}) {
-		if (Object.keys(filter).length === 0 && !options.force)
+		if (Object.keys(filter).length === 0 && !options.force) {
 			throw new Error('Please specify update filter');
+		}
 
 		options = this.getDefaultOption(options);
 		const result = await this.model.updateMany(filter, data, options);
@@ -53,8 +54,9 @@ module.exports = class RepositoryBase extends Base {
 	}
 
 	async delete(filter, options = {}) {
-		if (Object.keys(filter).length === 0 && !options.force)
+		if (Object.keys(filter).length === 0 && !options.force) {
 			throw new Error('Please specify delete filter');
+		}
 
 		const paranoid = this.model.schema.options.custom.paranoid;
 		options = this.getDefaultOption(options);

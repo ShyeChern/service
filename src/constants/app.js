@@ -1,6 +1,11 @@
 const app = {
 	NAME: 'service',
 
+	SYSTEM_USER: {
+		id: 'SYSTEM',
+		username: 'service',
+	},
+
 	ACTION: {
 		CREATE: 'CREATE',
 		UPDATE: 'UPDATE',
