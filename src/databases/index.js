@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const { listModules } = require('awilix');
-const models = listModules(['./src/*/*/*.model.js']);
 const { initMiddleware } = require('./middlewares');
+const { runMigrations } = require('./migrations');
 
 module.exports.init = async (opts) => {
 	const mongodb = await mongoose.createConnection(process.env.MONGODB_URL).asPromise();
@@ -15,6 +15,8 @@ module.exports.init = async (opts) => {
 			);
 		});
 	}
+
+	const models = listModules(['./src/*/*/*.model.js']);
 
 	for (let model of models) {
 		model = opts[model.name];
@@ -49,5 +51,8 @@ module.exports.init = async (opts) => {
 		mongodb.model(model.name, model.schema);
 	}
 	console.log('connected to database');
+
+	await runMigrations(opts, mongodb);
+
 	return mongodb;
 };

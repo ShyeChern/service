@@ -23,13 +23,14 @@ const init = (opts) => {
 };
 
 const createScope = () => {
-	return (req) => {
+	return (req, options = {}) => {
 		const requestId = v4();
 		const scope = container.createScope();
 		scope.register({
 			currentUser: asValue({}),
 			requestId: asValue(requestId),
 			req: asValue(req),
+			...options,
 		});
 		return scope;
 	};
@@ -47,11 +48,16 @@ container.loadModules(
 		['./src/*/*/*.repository.js', { register: asClass, lifetime: Lifetime.SCOPED }],
 		['./src/*/*/*.model.js', { register: asValue, lifetime: Lifetime.SINGLETON }],
 		['./src/utils/logger.js', { register: asClass, lifetime: Lifetime.SCOPED }],
+		['./src/databases/seeders/*.seeder.js', { register: asValue, lifetime: Lifetime.SINGLETON }],
+		[
+			'./src/databases/migrations/*.migration.js',
+			{ register: asValue, lifetime: Lifetime.SINGLETON },
+		],
 	],
 	{
 		formatName: (name, descriptor) => {
 			if (name.includes('.model')) return name;
-			return string.toCamelCase(descriptor.value.name);
+			return descriptor.value.name ? string.toCamelCase(descriptor.value.name) : name;
 		},
 	},
 );

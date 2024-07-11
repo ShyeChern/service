@@ -16,8 +16,9 @@ module.exports.getDiff = (oldValue, newValue) => {
 			typeof prev === 'object' &&
 			typeof after === 'object' &&
 			JSON.stringify(prev) === JSON.stringify(after)
-		)
+		) {
 			continue;
+		}
 
 		diff.old = { ...diff.old, [key]: prev };
 		diff.new = { ...diff.new, [key]: after };
@@ -27,3 +28,21 @@ module.exports.getDiff = (oldValue, newValue) => {
 };
 
 module.exports.getUnique = () => {};
+
+module.exports.sort = (arr, options = {}) => {
+	const multiplier = options.isReverse ? -1 : 1;
+	const field = options.field;
+	const convert = options.convert ?? ((v) => v);
+	const numeric = options.numeric ?? false;
+	const compare =
+		options.compare ?? new Intl.Collator(undefined, { sensitivity: 'base', numeric }).compare;
+
+	const result = arr.toSorted((a, b) => {
+		const valueA = convert(field ? a[field] : a);
+		const valueB = convert(field ? b[field] : b);
+
+		return multiplier * compare(valueA, valueB);
+	});
+
+	return result;
+};

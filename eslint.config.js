@@ -35,6 +35,8 @@ module.exports = [
 				'error',
 				{ enforce: [{ blankLine: 'always', prev: 'method', next: 'method' }] },
 			],
+			'@stylistic/js/multiline-comment-style': ['error', 'separate-lines'],
+			'@stylistic/js/lines-around-comment': ['error', { allowBlockStart: true }],
 		},
 	},
 ];

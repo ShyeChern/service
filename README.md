@@ -40,3 +40,5 @@ npx eslint
 https://www.npmjs.com/package/npm-check-updates
 npx npm-check-updates
 ncu -u
+
+db migration seeder name file in datetime to allow running in sequence
