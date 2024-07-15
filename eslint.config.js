@@ -15,6 +15,7 @@ module.exports = [
 		rules: {
 			'prefer-const': 'error',
 			'no-use-before-define': 'error',
+			'no-unused-vars': ['error', { ignoreRestSiblings: true }],
 			'@stylistic/js/quotes': ['error', 'single'],
 			'@stylistic/js/indent': ['error', 'tab'],
 			'@stylistic/js/quote-props': ['error', 'as-needed'],

@@ -4,6 +4,7 @@ module.exports = class RepositoryBase extends Base {
 	constructor(model, opts) {
 		super(opts);
 		this.model = opts.mongodb.models[model.name];
+		this.mongodb = this.model.db;
 		if (this.constructor.name !== 'AuditRepository') this.auditService = opts.auditService;
 	}
 

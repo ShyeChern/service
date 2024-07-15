@@ -15,18 +15,15 @@ TODO:
 
 - files middleware
 - cache GET request
+- configs models, cache?
 - script to create template use pluralrize
 - minimize crud code
 - cookie
 - role access, save role in token get role details on init and compare, if updated set in container globally
-- db audit
-- db migration seeder
 - concurrency update
 - common utils remove duplicates, sort etc (another package maybe)
 - cronjob
 - k8s setup
-- action log queue from db
-- db transaction
 
 thunder client
 https://github.com/rangav/thunder-client-support
@@ -41,4 +38,4 @@ https://www.npmjs.com/package/npm-check-updates
 npx npm-check-updates
 ncu -u
 
-db migration seeder name file in datetime to allow running in sequence
+db migration seeder name file in datetime to allow running in sequence, always run in transaction

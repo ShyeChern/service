@@ -8,12 +8,13 @@ module.exports.init = async (opts) => {
 
 	if (process.env.NODE_ENV !== 'production') {
 		mongoose.set('debug', function (collectionName, methodName, ...methodArgs) {
-			for (const methodArg of methodArgs) {
-				delete methodArg?.auditService;
-				delete methodArg?.session;
-			}
 			console.log(
-				`Mongoose: ${collectionName}.${methodName}(${methodArgs.map(JSON.stringify).join(', ')})`,
+				`Mongoose: ${collectionName}.${methodName}(${methodArgs
+					.map((v) => {
+						const { auditService, session, ...rest } = v;
+						return JSON.stringify(rest);
+					})
+					.join(', ')})`,
 			);
 		});
 	}
