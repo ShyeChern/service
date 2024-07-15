@@ -8,8 +8,10 @@ module.exports.init = async (opts) => {
 
 	if (process.env.NODE_ENV !== 'production') {
 		mongoose.set('debug', function (collectionName, methodName, ...methodArgs) {
-			delete methodArgs[1]?.auditService;
-			delete methodArgs[2]?.auditService;
+			for (const methodArg of methodArgs) {
+				delete methodArg?.auditService;
+				delete methodArg?.session;
+			}
 			console.log(
 				`Mongoose: ${collectionName}.${methodName}(${methodArgs.map(JSON.stringify).join(', ')})`,
 			);

@@ -12,6 +12,11 @@ const { cache } = require('./constants');
 const NodeCache = require('node-cache');
 const database = require('./databases');
 
+const container = createContainer({
+	strict: true,
+	injectionMode: InjectionMode.PROXY,
+});
+
 const init = (opts) => {
 	return async () => {
 		const mongodb = await database.init(opts);
@@ -35,11 +40,6 @@ const createScope = () => {
 		return scope;
 	};
 };
-
-const container = createContainer({
-	strict: true,
-	injectionMode: InjectionMode.PROXY,
-});
 
 container.loadModules(
 	[

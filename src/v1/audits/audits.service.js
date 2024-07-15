@@ -84,7 +84,6 @@ module.exports = class AuditService extends ServiceBase {
 					query.options,
 				);
 			}
-			console.log(prevValues);
 		} catch (e) {
 			this.logger.error('error update audit', e);
 		}

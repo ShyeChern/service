@@ -13,6 +13,7 @@ const QUERY = {
 
 		const update = this.getUpdate();
 		if (custom.author && update && !options.isDelete) {
+			if (!options.currentUser) throw new Error('currentUser is not provided for audit');
 			const author = {
 				id: options.currentUser.id,
 				username: options.currentUser.username,
@@ -43,7 +44,10 @@ const DOCUMENT = {
 		const custom = this.constructor.schema.options.custom;
 		const options = this.$__.saveOptions;
 
+		if (options.skipMiddleware) return next();
+
 		if (custom.author) {
+			if (!options.currentUser) throw new Error('currentUser is not provided for audit');
 			const author = {
 				id: options.currentUser.id,
 				username: options.currentUser.username,
@@ -54,9 +58,11 @@ const DOCUMENT = {
 		return next();
 	},
 	post: function (doc, next) {
+		const options = this.$__.saveOptions;
+
+		if (options.skipMiddleware) return next();
 		if (this.constructor.modelName === auditModel.name) return next();
 
-		const options = this.$__.saveOptions;
 		options.auditService.createLog(doc, options);
 
 		return next();
@@ -66,7 +72,10 @@ const DOCUMENT = {
 const AGGREGATE = {
 	pre: function (next) {
 		const custom = this._model.schema.options.custom;
-		// const options = this.options;
+		const options = this.options;
+
+		if (options.skipMiddleware) return next();
+
 		if (custom.paranoid) {
 			this.pipeline().unshift({ $match: { deletedAt: { $eq: null } } });
 		}
@@ -76,8 +85,11 @@ const AGGREGATE = {
 
 const MODEL = {
 	pre: function (next, data, options) {
+		if (options.skipMiddleware) return next();
+
 		const custom = this.schema.options.custom;
 		if (custom.author) {
+			if (!options.currentUser) throw new Error('currentUser is not provided for audit');
 			const author = {
 				id: options.currentUser.id,
 				username: options.currentUser.username,
@@ -88,10 +100,10 @@ const MODEL = {
 				value.createdBy = author;
 			}
 		}
-		this.options = options;
 		return next();
 	},
 	post: function (data, next) {
+		if (this.options.skipMiddleware) return next();
 		this.options.auditService.createLog(data, this.options);
 		return next();
 	},
