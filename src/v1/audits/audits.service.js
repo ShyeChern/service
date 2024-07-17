@@ -1,6 +1,6 @@
 const ServiceBase = require('../../base/service');
 const { app } = require('../../constants');
-const { getDiff } = require('../../utils');
+const { object } = require('../../utils');
 
 module.exports = class AuditService extends ServiceBase {
 	constructor(opts) {
@@ -57,7 +57,7 @@ module.exports = class AuditService extends ServiceBase {
 
 			for (const value of prevValues) {
 				const newValue = newValues.find((v) => v._id.toString() === value._id.toString());
-				const diff = getDiff(value, newValue);
+				const diff = object.getDiff(value, newValue);
 				this.auditRepository.create(
 					{ ...details, identifier: value._id, prevValue: diff.old, newValue: diff.new },
 					query.options,

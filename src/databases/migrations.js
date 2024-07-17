@@ -1,9 +1,9 @@
 const { listModules } = require('awilix');
-const { sort } = require('../utils');
+const { array } = require('../utils');
 
 module.exports.runMigrations = async (opts, db) => {
-	const seeds = sort(listModules(['./src/databases/seeders/*.seeder.js']), { field: 'name' });
-	const migrations = sort(listModules(['./src/databases/migrations/*.migration.js']), {
+	const seeds = array.sort(listModules(['./src/databases/seeders/*.seeder.js']), { field: 'name' });
+	const migrations = array.sort(listModules(['./src/databases/migrations/*.migration.js']), {
 		field: 'name',
 	});
 
