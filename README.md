@@ -14,8 +14,7 @@ npm run dev
 TODO:
 
 - files middleware
-- cache GET request
-- configs models, cache?
+- configs models, cache configs?
 - script to create template use pluralrize
 - minimize crud code
 - cookie

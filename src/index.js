@@ -5,6 +5,7 @@ require('dotenv').config({
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
+const { rateLimit } = require('express-rate-limit');
 const compression = require('compression');
 const cookieParser = require('cookie-parser');
 const middlewares = require('./middlewares');
@@ -15,12 +16,20 @@ const port = process.env.PORT;
 	const app = express();
 	app.use(cors({ origin: true, credentials: true }));
 	app.use(helmet());
+	app.use(
+		rateLimit({
+			limit: 100,
+			standardHeaders: true,
+			legacyHeaders: false,
+		}),
+	);
 	app.use(express.urlencoded({ extended: true }));
 	app.use(express.json());
 	app.use(compression());
 	app.use(middlewares.i18n);
 	app.use(middlewares.createScope);
 	app.use(middlewares.logger);
+	app.use(middlewares.cache);
 	app.use(cookieParser(process.env.COOKIE_SIGNAGURE));
 	app.use(middlewares.auth);
 	app.use(require('./routes'));
