@@ -1,9 +1,14 @@
 const { I18n } = require('i18n');
 const path = require('path');
 const fs = require('fs');
+const { listModules } = require('awilix');
+const { array } = require('../utils');
+const namespaces = array.removeDuplicates(listModules(['./src/locales/**/*.json']), {
+	field: 'name',
+	returnUnique: true,
+});
 
-const namespaces = ['validation', 'error', 'user'];
-const locales = ['en', 'cn'];
+const locales = fs.readdirSync('./src/locales/');
 const staticCatalog = {};
 for (const locale of locales) {
 	staticCatalog[locale] = {};

@@ -67,4 +67,45 @@ describe('utils/array', () => {
 			expect(sortedArrayStringLength[sortedArrayStringLength.length - 1].string).toBe('Apple');
 		});
 	});
+
+	describe('removeDuplicates', () => {
+		const valueWithDuplicates = [3, 1, 3, 2, 5, 0];
+		const objectWithDuplicates = [
+			{ id: 1, name: 'Alice' },
+			{ id: 2, name: 'Bob' },
+			{ id: 1, name: 'Alice' },
+			{ id: 3, name: 'Charlie' },
+		];
+
+		test('should able to remove duplicate value of array', () => {
+			const result = array.removeDuplicates(valueWithDuplicates);
+			expect(result.length).toBe(5);
+		});
+
+		test('should able to remove duplicate value of array of object', () => {
+			const result = array.removeDuplicates(objectWithDuplicates, { field: 'name' });
+			expect(result.length).toBe(3);
+		});
+
+		test('should able to remove empty value', () => {
+			const valueResult = array.removeDuplicates([...valueWithDuplicates, undefined]);
+			const objectResult = array.removeDuplicates(
+				[...objectWithDuplicates, { id: undefined, name: undefined }],
+				{
+					field: 'name',
+				},
+			);
+			expect(valueResult.length).toBe(5);
+			expect(objectResult.length).toBe(3);
+		});
+
+		test('should able to return array of unique value', () => {
+			const result = array.removeDuplicates(objectWithDuplicates, {
+				field: 'name',
+				returnUnique: true,
+			});
+
+			expect(result.every((v) => typeof v === 'string')).toBe(true);
+		});
+	});
 });

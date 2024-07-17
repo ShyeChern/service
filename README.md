@@ -16,6 +16,7 @@ TODO:
 - files middleware
 - configs models, cache configs?
 - script to create template use pluralrize
+- data validation
 - minimize crud code
 - cookie
 - role access, save role in token get role details on init and compare, if updated set in container globally
