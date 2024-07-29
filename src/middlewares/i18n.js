@@ -3,9 +3,8 @@ const path = require('path');
 const fs = require('fs');
 const { listModules } = require('awilix');
 const { array } = require('../utils');
-const namespaces = array.removeDuplicates(listModules(['./src/locales/**/*.json']), {
+const namespaces = array.getUniques(listModules(['./src/locales/**/*.json']), {
 	field: 'name',
-	returnUnique: true,
 });
 
 const locales = fs.readdirSync('./src/locales/');

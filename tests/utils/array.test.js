@@ -43,9 +43,9 @@ describe('utils/array', () => {
 			expect(sortedArrayDescending[sortedArrayDescending.length - 1].number).toBe(1);
 		});
 
-		test('should able to sort array by providing custom convert function', () => {
+		test('should able to sort array by providing custom converter function', () => {
 			const sortedArrayNumber = array.sort([6, 10, 2, 1.5, 1.2, 1.3, 1, 100.1, 100.5, 100.3, 10], {
-				convert: parseInt,
+				converter: parseInt,
 				numeric: true,
 			});
 			expect(sortedArrayNumber[0]).toBe(1.5);
@@ -73,8 +73,9 @@ describe('utils/array', () => {
 		const objectWithDuplicates = [
 			{ id: 1, name: 'Alice' },
 			{ id: 2, name: 'Bob' },
-			{ id: 1, name: 'Alice' },
-			{ id: 3, name: 'Charlie' },
+			{ id: 3, name: 'Alice' },
+			{ id: 4, name: 'Charlie' },
+			{ id: 5, name: 'Alex' },
 		];
 
 		test('should able to remove duplicate value of array', () => {
@@ -84,7 +85,7 @@ describe('utils/array', () => {
 
 		test('should able to remove duplicate value of array of object', () => {
 			const result = array.removeDuplicates(objectWithDuplicates, { field: 'name' });
-			expect(result.length).toBe(3);
+			expect(result.length).toBe(4);
 		});
 
 		test('should able to remove empty value', () => {
@@ -96,16 +97,71 @@ describe('utils/array', () => {
 				},
 			);
 			expect(valueResult.length).toBe(5);
-			expect(objectResult.length).toBe(3);
+			expect(objectResult.length).toBe(4);
 		});
 
 		test('should able to return array of unique value', () => {
-			const result = array.removeDuplicates(objectWithDuplicates, {
+			const { uniques } = array.removeDuplicates(objectWithDuplicates, {
 				field: 'name',
-				returnUnique: true,
+				uniques: true,
 			});
 
-			expect(result.every((v) => typeof v === 'string')).toBe(true);
+			expect(uniques.every((v) => typeof v === 'string')).toBe(true);
+		});
+
+		test('should able to provide custom converter to remove duplicates', () => {
+			const { result, uniques } = array.removeDuplicates(objectWithDuplicates, {
+				converter: (v) => v.id + v.name,
+				uniques: true,
+			});
+
+			expect(result.length).toBe(5);
+			expect(uniques.length).toBe(5);
+		});
+	});
+
+	describe('getUniques', () => {
+		const arrayValues = [1, 1, 2, 2, 3, 3];
+		const arrayObjects = [
+			{ id: 1, name: 'Alice' },
+			{ id: 2, name: 'Bob' },
+			{ id: 1, name: 'Alice' },
+			{ id: 3, name: 'Charlie' },
+		];
+
+		test('should able to get unique value of array', () => {
+			const result = array.getUniques(arrayValues);
+			expect(result.length).toBe(3);
+		});
+
+		test('should able to get unique value of array of object', () => {
+			const result = array.getUniques(arrayObjects, { field: 'name' });
+			expect(result.length).toBe(3);
+		});
+	});
+
+	describe('groupBy', () => {
+		const arrayValues = [1, 1, 2, 2, 3, 3];
+		const arrayObjects = [
+			{ gender: 'f', name: 'Alice' },
+			{ gender: 'm', name: 'Bob' },
+			{ gender: 'F', name: 'Alice' },
+			{ gender: 'm', name: 'Charlie' },
+		];
+
+		test('should able to group value of array', () => {
+			const result = array.groupBy(arrayValues);
+			expect(Object.keys(result).length).toBe(3);
+		});
+
+		test('should able to group array of object', () => {
+			const result = array.groupBy(arrayObjects, { field: 'gender' });
+			expect(Object.keys(result).length).toBe(3);
+		});
+
+		test('should able to provide custom converter to group array', () => {
+			const result = array.groupBy(arrayObjects, { converter: (v) => v.gender.toLowerCase() });
+			expect(Object.keys(result).length).toBe(2);
 		});
 	});
 });
