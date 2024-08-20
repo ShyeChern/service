@@ -1,7 +1,7 @@
 const { Schema } = require('mongoose');
 
 module.exports = class AuditRepository {
-	static name = 'Audit';
+	static modelName = 'Audit';
 	static schema = new Schema(
 		{
 			method: String,

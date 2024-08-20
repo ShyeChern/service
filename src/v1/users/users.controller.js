@@ -1,6 +1,6 @@
 const ControllerBase = require('../../base/controller');
 const userValidator = require('./users.validator');
-const { app } = require('../../constants');
+const { app, file } = require('../../constants');
 
 module.exports = class UserController extends ControllerBase {
 	constructor(opts) {
@@ -30,7 +30,12 @@ module.exports = class UserController extends ControllerBase {
 
 	async create(req, res, next) {
 		try {
-			const user = await this.userService.create(req.body);
+			await super.validateFile(req, res, { destination: file.DIRECTORY.PROFILE_IMAGE });
+			const data = await super.validate(userValidator.create, { ...req.body, ...req.files });
+			if (data.profileImage) {
+				data.profileImage = data.profileImage[0].path;
+			}
+			const user = await this.userService.create(data);
 			return res.status(app.CREATED).send(user);
 		} catch (err) {
 			next(err);

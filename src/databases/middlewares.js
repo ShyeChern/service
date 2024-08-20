@@ -61,7 +61,7 @@ const DOCUMENT = {
 		const options = this.$__.saveOptions;
 
 		if (options.skipMiddleware) return next();
-		if (this.constructor.modelName === auditModel.name) return next();
+		if (this.constructor.modelName === auditModel.modelName) return next();
 
 		options.auditService.createLog(doc, options);
 

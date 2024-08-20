@@ -24,6 +24,9 @@ TODO:
 - common utils remove duplicates, sort etc (another package maybe)
 - cronjob
 - k8s setup
+- add jsdoc to util for type checking
+- KIV sort import https://www.npmjs.com/package/eslint-plugin-import
+- Object.freeze
 
 thunder client
 https://github.com/rangav/thunder-client-support

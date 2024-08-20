@@ -6,3 +6,8 @@ module.exports.getAll = validator.pagination.concat(
 		otherData: Joi.boolean().label('other data'),
 	}),
 );
+
+module.exports.create = Joi.object({
+	username: Joi.string().required(),
+	profileImage: Joi.array().length(1).items(validator.image).label('profile image'),
+});

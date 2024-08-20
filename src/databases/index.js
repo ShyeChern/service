@@ -19,10 +19,10 @@ module.exports.init = async (opts) => {
 		});
 	}
 
-	const models = listModules(['./src/*/*/*.model.js']);
+	const modelModules = listModules(['./src/*/*/*.model.js']);
 
-	for (let model of models) {
-		model = opts[model.name];
+	for (const modelModule of modelModules) {
+		let model = opts[modelModule.name];
 		const custom = {
 			author: false,
 			paranoid: false,
@@ -49,9 +49,9 @@ module.exports.init = async (opts) => {
 
 		model.schema.set('custom', custom);
 
-		model = initMiddleware(model, custom);
+		model = initMiddleware(model);
 
-		mongodb.model(model.name, model.schema);
+		mongodb.model(model.modelName, model.schema);
 	}
 	console.log('connected to database');
 
