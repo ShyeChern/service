@@ -1,4 +1,4 @@
-const app = {
+const app = Object.freeze({
 	NAME: 'service',
 
 	SYSTEM_USER: {
@@ -18,6 +18,6 @@ const app = {
 	FORBIDDEN: 403,
 	NOT_FOUND: 404,
 	INTERNAL_SERVER_ERROR: 500,
-};
+});
 
 module.exports = app;

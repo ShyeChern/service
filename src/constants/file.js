@@ -1,4 +1,4 @@
-const file = {
+const file = Object.freeze({
 	SIZE: {
 		'1MB': 1048576,
 		'10MB': 10485760,
@@ -16,6 +16,6 @@ const file = {
 		JPEG: 'image/jpeg',
 		PNG: 'image/png',
 	},
-};
+});
 
 module.exports = file;
