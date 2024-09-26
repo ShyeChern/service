@@ -1,6 +1,6 @@
 const ServiceBase = require('../../base/service');
 const { app } = require('../../constants');
-const { object } = require('../../utils');
+const { object } = require('@chern_1997/utils');
 
 module.exports = class AuditService extends ServiceBase {
 	constructor(opts) {

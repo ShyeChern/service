@@ -1,7 +1,7 @@
 const { asValue } = require('awilix');
 const ErrorBase = require('../base/error');
 const { error, cache, app } = require('../constants');
-const { security } = require('../utils');
+const { security } = require('@chern_1997/utils');
 
 module.exports = async (req, res, next) => {
 	const whitelistUrl = {

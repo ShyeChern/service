@@ -1,5 +1,5 @@
 const AuthController = require('./auth.controller');
-const { string } = require('../../utils');
+const { string } = require('@chern_1997/utils');
 
 module.exports = {
 	name: string.toCamelCase(AuthController.name),

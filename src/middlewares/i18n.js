@@ -2,8 +2,8 @@ const { I18n } = require('i18n');
 const path = require('path');
 const fs = require('fs');
 const { listModules } = require('awilix');
-const { array } = require('../utils');
-const namespaces = array.getUniques(listModules(['./src/locales/**/*.json']), {
+const { array } = require('@chern_1997/utils');
+const { uniques: namespaces } = array.removeDuplicates(listModules(['./src/locales/**/*.json']), {
 	field: 'name',
 });
 

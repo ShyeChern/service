@@ -6,7 +6,7 @@ const {
 	Lifetime,
 	asFunction,
 } = require('awilix');
-const { string } = require('./utils');
+const { string, Logger } = require('@chern_1997/utils');
 const { v4 } = require('uuid');
 const { cache } = require('./constants');
 const NodeCache = require('node-cache');
@@ -47,7 +47,6 @@ container.loadModules(
 		['./src/*/*/*.service.js', { register: asClass, lifetime: Lifetime.SCOPED }],
 		['./src/*/*/*.repository.js', { register: asClass, lifetime: Lifetime.SCOPED }],
 		['./src/*/*/*.model.js', { register: asValue, lifetime: Lifetime.SINGLETON }],
-		['./src/utils/logger.js', { register: asClass, lifetime: Lifetime.SCOPED }],
 		['./src/databases/seeders/*.seeder.js', { register: asValue, lifetime: Lifetime.SINGLETON }],
 		[
 			'./src/databases/migrations/*.migration.js',
@@ -65,6 +64,7 @@ container.loadModules(
 container.register({
 	init: asFunction(init),
 	createScope: asFunction(createScope).singleton(),
+	logger: asClass(Logger).scoped(),
 });
 
 module.exports = container;

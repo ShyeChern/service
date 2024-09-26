@@ -1,5 +1,5 @@
 const { listModules } = require('awilix');
-const { array } = require('../utils');
+const { array } = require('@chern_1997/utils');
 
 module.exports.runMigrations = async (opts, db) => {
 	const seeds = array.sort(listModules(['./src/databases/seeders/*.seeder.js']), { field: 'name' });

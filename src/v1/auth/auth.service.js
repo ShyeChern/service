@@ -1,6 +1,6 @@
 const ServiceBase = require('../../base/service');
 const BaseError = require('../../base/error');
-const { security } = require('../../utils');
+const { security } = require('@chern_1997/utils');
 
 module.exports = class AuthService extends ServiceBase {
 	constructor(opts) {
