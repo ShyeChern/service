@@ -15,7 +15,7 @@ module.exports = class AuthService extends ServiceBase {
 		}
 
 		const userPassword = Buffer.from(data.password, 'base64').toString('utf-8');
-		if (!security.compareHash(userPassword, user.password)) {
+		if (!security.verifyHash(userPassword, user.password)) {
 			throw new BaseError(this.t('user.invalidCredential'));
 		}
 

@@ -8,7 +8,7 @@ module.exports = async (req, res, next) => {
 		'/api/v1/auth/login': true,
 	};
 
-	if (whitelistUrl[req.path]) return next();
+	if (whitelistUrl[req.originalUrl]) return next();
 
 	if (!req.headers.authorization) {
 		return next(new ErrorBase(req.__('error.unauthorized'), app.UNAUTHORIZED));

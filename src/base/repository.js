@@ -12,6 +12,7 @@ module.exports = class RepositoryBase extends Base {
 		return {
 			currentUser: this.currentUser,
 			auditService: this.auditService,
+			lean: true,
 			...options,
 		};
 	}
