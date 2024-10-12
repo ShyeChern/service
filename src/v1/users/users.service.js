@@ -9,17 +9,22 @@ module.exports = class UserService extends ServiceBase {
 	}
 
 	async get(params) {
-		const user = await this.userRepository.get(params);
-		if (!user) throw new ErrorBase(this.t('usernotfound'), app.NOT_FOUND);
+		const filter = {
+			_id: params.id,
+		};
+		const user = await this.userRepository.get(filter);
+		if (!user) throw new ErrorBase(this.t('user.notFound'), app.NOT_FOUND);
 		return user;
 	}
 
 	async getAll(query) {
-		const result = await this.userRepository.getAll(query);
-		return {
-			data: result,
-			...query,
-		};
+		const filter = {};
+		const result = await this.userRepository.paginate(
+			filter,
+			{},
+			{ limit: query.limit, page: query.page, sorts: query.sorts },
+		);
+		return result;
 	}
 
 	async create(data) {

@@ -3,8 +3,12 @@ const { file: fileConst } = require('../constants');
 
 module.exports.pagination = Joi.object({
 	limit: Joi.number().min(0).default(10),
-	offset: Joi.number().min(0).default(10),
 	page: Joi.number().min(1).default(1),
+	sorts: Joi.array().items(
+		Joi.string()
+			.pattern(/^(.*),(1|-1)$/)
+			.required(),
+	),
 });
 
 const file = Joi.object({

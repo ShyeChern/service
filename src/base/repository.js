@@ -12,26 +12,56 @@ module.exports = class RepositoryBase extends Base {
 		return {
 			currentUser: this.currentUser,
 			auditService: this.auditService,
-			lean: true,
 			...options,
 		};
 	}
 
+	transformData(data) {
+		if (Array.isArray(data)) {
+			data = data.map((v) => this.transformData(v));
+		}
+
+		if (data?.constructor?.name === 'model' && data.toJSON) {
+			data = data.toJSON();
+		}
+		return data;
+	}
+
 	async getAll(filter, projection, options = {}) {
 		options = this.getDefaultOption(options);
-		// const result = await this.model.find(filter, projection, options);
-		const result = await this.model.aggregate([], options);
-		return result;
+		const result = await this.model.find(filter, projection, options);
+		return this.transformData(result);
 	}
 
 	async get(filter, projection, options = {}) {
 		options = this.getDefaultOption(options);
 		const result = await this.model.findOne(filter, projection, options);
+		return this.transformData(result);
+	}
+
+	async count(filter, options = {}) {
+		options = this.getDefaultOption({ ...options, limit: undefined, skip: undefined });
+		const result = await this.model.countDocuments(filter, options);
 		return result;
+	}
+
+	async paginate(filter, projection, options = {}) {
+		options.skip = (options.page - 1) * options.limit;
+		options.sort = options.sorts?.reduce((acc, cur) => {
+			const [field, order] = cur.split(',');
+			acc[field] = +order;
+			return acc;
+		}, {}) ?? { _id: -1 };
+		const [data, count] = await Promise.all([
+			this.getAll(filter, projection, options),
+			this.count(filter, options),
+		]);
+		return { data, count, totalPage: Math.ceil(count / options.limit) };
 	}
 
 	async aggregate(pipeline, options = {}) {
 		options = this.getDefaultOption(options);
+		// TODO: transform data?
 		const result = await this.model.aggregate(pipeline, options);
 		return result;
 	}
