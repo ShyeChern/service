@@ -33,15 +33,15 @@ module.exports = class UserService extends ServiceBase {
 	}
 
 	async update(id, data) {
-		const user = await this.userRepository.get({ _id: id });
-		if (!user) throw new ErrorBase(this.t('usernotfound'), app.NOT_FOUND);
-
+		const user = await this.get({ id });
+		this.checkConcurrency(user, data);
 		await this.userRepository.update({ _id: id }, data);
 		return { id };
 	}
 
 	async delete(id) {
-		const result = await this.userRepository.delete({ _id: id });
-		return { id: result._id };
+		await this.get({ id });
+		await this.userRepository.delete({ _id: id });
+		return { id };
 	}
 };
