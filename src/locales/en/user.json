@@ -1,3 +1,4 @@
 {
-	"invalidCredential": "Invalid username or password"
+	"invalidCredential": "Invalid username or password",
+	"notFound": "User not found"
 }

@@ -13,7 +13,9 @@ for (const locale of locales) {
 	staticCatalog[locale] = {};
 	for (const namespace of namespaces) {
 		staticCatalog[locale][namespace] = JSON.parse(
-			fs.readFileSync(path.join(__dirname, `../locales/${locale}/${namespace}.json`)),
+			fs.readFileSync(path.join(__dirname, `../locales/${locale}/${namespace}.json`), {
+				encoding: 'utf8',
+			}),
 		);
 	}
 }
