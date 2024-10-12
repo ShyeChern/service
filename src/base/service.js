@@ -8,7 +8,7 @@ module.exports = class ServiceBase extends Base {
 	}
 
 	checkConcurrency(prevValue, newValue) {
-		if (prevValue.updatedAt?.toISOString() !== newValue.updatedAt) {
+		if (new Date(prevValue.updatedAt).getTime() > new Date(newValue.updatedAt).getTime()) {
 			throw new ErrorBase(this.t('validation.concurrency'));
 		}
 		delete newValue.updatedBy;
