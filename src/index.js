@@ -16,6 +16,8 @@ const port = process.env.PORT;
 	const app = express();
 	app.use(cors({ origin: true, credentials: true }));
 	app.use(helmet());
+	app.use(middleware.createScope);
+	app.use(middleware.i18n);
 	app.use(
 		rateLimit({
 			limit: 100,
@@ -26,8 +28,6 @@ const port = process.env.PORT;
 	app.use(express.urlencoded({ extended: true }));
 	app.use(express.json());
 	app.use(compression());
-	app.use(middleware.i18n);
-	app.use(middleware.createScope);
 	app.use(middleware.logger);
 	app.use(middleware.cache);
 	app.use(cookieParser(process.env.COOKIE_SIGNAGURE));
