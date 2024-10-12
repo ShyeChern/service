@@ -20,6 +20,14 @@ module.exports.init = async (opts) => {
 	}
 
 	const modelModules = listModules(['./src/*/*/*.model.js']);
+	const transformOption = {
+		virtuals: true,
+		versionKey: false,
+		transform: function (doc, ret) {
+			delete ret._id;
+			return ret;
+		},
+	};
 
 	for (const modelModule of modelModules) {
 		let model = opts[modelModule.name];
@@ -47,6 +55,12 @@ module.exports.init = async (opts) => {
 			model.schema.index(index);
 		}
 
+		model.schema.virtual('id').get(function () {
+			return this._id.toHexString();
+		});
+
+		model.schema.set('toJSON', transformOption);
+		model.schema.set('toObject', transformOption);
 		model.schema.set('custom', custom);
 
 		model = initMiddleware(model);
