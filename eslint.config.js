@@ -15,10 +15,10 @@ module.exports = [
 	{
 		plugins: {
 			'@stylistic': stylistic,
+			import: importPlugin,
 		},
 	},
 	eslintPluginUnicorn.configs['flat/recommended'],
-	importPlugin.flatConfigs.recommended,
 	{
 		rules: {
 			'prefer-const': 'error',
