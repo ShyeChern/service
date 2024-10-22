@@ -48,6 +48,7 @@ module.exports = [
 			],
 			'@stylistic/multiline-comment-style': ['error', 'separate-lines'],
 			'@stylistic/lines-around-comment': ['error', { allowBlockStart: true }],
+			'@stylistic/nonblock-statement-body-position': ['error', 'beside'],
 			'unicorn/prevent-abbreviations': 'off',
 			'unicorn/prefer-module': 'off',
 			'unicorn/no-anonymous-default-export': 'off',
