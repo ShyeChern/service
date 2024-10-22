@@ -21,22 +21,17 @@ TODO:
 - cookie
 - role access, save role in token get role details on init and compare, if updated set in container globally
 - concurrency update
-- common utils remove duplicates, sort etc (another package maybe)
 - cronjob
 - k8s setup
-- add jsdoc to util for type checking
 - aggregate default projection/virtuals
+- joi validation message
 
 https://marketplace.visualstudio.com/items?itemName=humao.rest-client
-
-thunder client
-https://github.com/rangav/thunder-client-support
-https://github.com/rangav/thunder-client-support/blob/master/docs/tc-types.d.ts
 
 jest test only specific file(s) (match regex pattern)
 npm test -- tests/utils/security.test.js
 
-npx eslint
+npm run lint -- --fix
 
 https://www.npmjs.com/package/npm-check-updates
 npx npm-check-updates

@@ -1,9 +1,9 @@
 const path = require('node:path');
 const multer = require('multer');
 const { format } = require('date-fns');
+const { array } = require('@chern_1997/utils');
 const { error: errorCode, file } = require('../constants');
 const ErrorBase = require('./error');
-const { array } = require('@chern_1997/utils');
 
 module.exports = class Base {
 	constructor(opts) {

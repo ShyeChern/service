@@ -3,6 +3,11 @@ const ServiceBase = require('../../base/service');
 const { app } = require('../../constants');
 
 module.exports = class AuditService extends ServiceBase {
+	/**
+	 * @param {Object} opts
+	 * @param {import('express').Request} opts.req
+	 * @param {import('./audits.repository')} opts.auditRepository
+	 */
 	constructor(opts) {
 		super(opts);
 		this.req = opts.req;

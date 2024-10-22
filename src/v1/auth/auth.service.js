@@ -3,6 +3,10 @@ const ServiceBase = require('../../base/service');
 const BaseError = require('../../base/error');
 
 module.exports = class AuthService extends ServiceBase {
+	/**
+	 * @param {Object} opts - options
+	 * @param {import('../users/users.repository')} opts.userRepository
+	 */
 	constructor(opts) {
 		super(opts);
 		this.userRepository = opts.userRepository;

@@ -8,8 +8,8 @@ const {
 } = require('awilix');
 const { string, Logger } = require('@chern_1997/utils');
 const { v4 } = require('uuid');
-const { cache } = require('./constants');
 const NodeCache = require('node-cache');
+const { cache } = require('./constants');
 const database = require('./databases');
 
 const container = createContainer({

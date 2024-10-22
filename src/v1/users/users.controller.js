@@ -3,6 +3,10 @@ const { app, file } = require('../../constants');
 const userValidator = require('./users.validator');
 
 module.exports = class UserController extends ControllerBase {
+	/**
+	 * @param {Object} opts
+	 * @param {import('./users.service')} opts.userService
+	 */
 	constructor(opts) {
 		super(opts);
 		this.userService = opts.userService;
@@ -30,8 +34,15 @@ module.exports = class UserController extends ControllerBase {
 
 	async create(req, res, next) {
 		try {
-			await super.validateFile(req, res, { destination: file.DIRECTORY.PROFILE_IMAGE });
-			const data = await super.validate(userValidator.create, { ...req.body, ...req.files });
+			const isMultipart = req.headers['content-type']?.includes('multipart/form-data');
+			if (isMultipart) {
+				await super.validateFile(req, res, { destination: file.DIRECTORY.PROFILE_IMAGE });
+			}
+			const data = await super.validate(userValidator.create, {
+				...req.body,
+				...req.files,
+			});
+
 			if (data.profileImage) {
 				data.profileImage = data.profileImage[0].path;
 			}

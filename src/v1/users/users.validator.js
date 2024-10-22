@@ -9,5 +9,8 @@ module.exports.getAll = validator.pagination.concat(
 
 module.exports.create = Joi.object({
 	username: Joi.string().required(),
+	password: Joi.string()
+		.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W)[\w\W]{8,}$/)
+		.required(),
 	profileImage: Joi.array().length(1).items(validator.image).label('profile image'),
 });

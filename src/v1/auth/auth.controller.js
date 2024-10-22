@@ -2,6 +2,12 @@ const ControllerBase = require('../../base/controller');
 const authValidator = require('./auth.validator');
 
 module.exports = class AuthController extends ControllerBase {
+	/**
+	 * Authentication controller
+	 *
+	 * @param {Object} opts
+	 * @param {import('./auth.service')} opts.authService
+	 */
 	constructor(opts) {
 		super(opts);
 		this.authService = opts.authService;
