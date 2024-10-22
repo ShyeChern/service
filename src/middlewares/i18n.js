@@ -1,6 +1,6 @@
+const path = require('node:path');
+const fs = require('node:fs');
 const { I18n } = require('i18n');
-const path = require('path');
-const fs = require('fs');
 const { listModules } = require('awilix');
 const { array } = require('@chern_1997/utils');
 const { uniques: namespaces } = array.removeDuplicates(listModules(['./src/locales/**/*.json']), {

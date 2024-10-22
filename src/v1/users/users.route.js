@@ -1,5 +1,5 @@
-const UserController = require('./users.controller');
 const { string } = require('@chern_1997/utils');
+const UserController = require('./users.controller');
 
 module.exports = {
 	name: string.toCamelCase(UserController.name),

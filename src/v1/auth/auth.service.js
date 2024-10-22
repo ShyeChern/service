@@ -1,6 +1,6 @@
+const { security } = require('@chern_1997/utils');
 const ServiceBase = require('../../base/service');
 const BaseError = require('../../base/error');
-const { security } = require('@chern_1997/utils');
 
 module.exports = class AuthService extends ServiceBase {
 	constructor(opts) {
@@ -14,7 +14,7 @@ module.exports = class AuthService extends ServiceBase {
 			throw new BaseError(this.t('user.invalidCredential'));
 		}
 
-		const userPassword = Buffer.from(data.password, 'base64').toString('utf-8');
+		const userPassword = Buffer.from(data.password, 'base64').toString('utf8');
 		if (!security.verifyHash(userPassword, user.password)) {
 			throw new BaseError(this.t('user.invalidCredential'));
 		}

@@ -12,8 +12,8 @@ module.exports = class AuthController extends ControllerBase {
 			const data = await super.validate(authValidator.login, req.body);
 			const result = await this.authService.login(data);
 			return res.send(result);
-		} catch (err) {
-			next(err);
+		} catch (error) {
+			next(error);
 		}
 	}
 };

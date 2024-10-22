@@ -1,6 +1,6 @@
+const { object } = require('@chern_1997/utils');
 const ServiceBase = require('../../base/service');
 const { app } = require('../../constants');
-const { object } = require('@chern_1997/utils');
 
 module.exports = class AuditService extends ServiceBase {
 	constructor(opts) {
@@ -34,8 +34,8 @@ module.exports = class AuditService extends ServiceBase {
 					options,
 				);
 			}
-		} catch (e) {
-			this.logger.error('error create audit', e);
+		} catch (error) {
+			this.logger.error('error create audit', error);
 		}
 	}
 
@@ -63,8 +63,8 @@ module.exports = class AuditService extends ServiceBase {
 					query.options,
 				);
 			}
-		} catch (e) {
-			this.logger.error('error update audit', e);
+		} catch (error) {
+			this.logger.error('error update audit', error);
 		}
 	}
 
@@ -84,8 +84,8 @@ module.exports = class AuditService extends ServiceBase {
 					query.options,
 				);
 			}
-		} catch (e) {
-			this.logger.error('error update audit', e);
+		} catch (error) {
+			this.logger.error('error update audit', error);
 		}
 	}
 };

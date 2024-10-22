@@ -1,6 +1,6 @@
 const ControllerBase = require('../../base/controller');
-const userValidator = require('./users.validator');
 const { app, file } = require('../../constants');
+const userValidator = require('./users.validator');
 
 module.exports = class UserController extends ControllerBase {
 	constructor(opts) {
@@ -14,8 +14,8 @@ module.exports = class UserController extends ControllerBase {
 			const data = await super.validate(userValidator.getAll, req.query);
 			const user = await this.userService.getAll(data);
 			return res.send(user);
-		} catch (err) {
-			next(err);
+		} catch (error) {
+			next(error);
 		}
 	}
 
@@ -23,8 +23,8 @@ module.exports = class UserController extends ControllerBase {
 		try {
 			const user = await this.userService.get(req.params);
 			return res.send(user);
-		} catch (err) {
-			next(err);
+		} catch (error) {
+			next(error);
 		}
 	}
 
@@ -37,8 +37,8 @@ module.exports = class UserController extends ControllerBase {
 			}
 			const user = await this.userService.create(data);
 			return res.status(app.CREATED).send(user);
-		} catch (err) {
-			next(err);
+		} catch (error) {
+			next(error);
 		}
 	}
 
@@ -46,8 +46,8 @@ module.exports = class UserController extends ControllerBase {
 		try {
 			const user = await this.userService.update(req.params.id, req.body);
 			return res.send(user);
-		} catch (err) {
-			next(err);
+		} catch (error) {
+			next(error);
 		}
 	}
 
@@ -55,8 +55,8 @@ module.exports = class UserController extends ControllerBase {
 		try {
 			const user = await this.userService.delete(req.params.id);
 			return res.send(user);
-		} catch (err) {
-			next(err);
+		} catch (error) {
+			next(error);
 		}
 	}
 };

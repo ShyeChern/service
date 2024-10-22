@@ -28,6 +28,7 @@ module.exports = class UserService extends ServiceBase {
 	}
 
 	async create(data) {
+		// TODO: password
 		const result = await this.userRepository.create(data);
 		return { id: result[0]._id };
 	}

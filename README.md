@@ -25,7 +25,9 @@ TODO:
 - cronjob
 - k8s setup
 - add jsdoc to util for type checking
-- KIV sort import https://www.npmjs.com/package/eslint-plugin-import
+- aggregate default projection/virtuals
+
+https://marketplace.visualstudio.com/items?itemName=humao.rest-client
 
 thunder client
 https://github.com/rangav/thunder-client-support

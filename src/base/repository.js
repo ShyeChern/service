@@ -68,9 +68,9 @@ module.exports = class RepositoryBase extends Base {
 
 	async create(data, options = {}) {
 		options = this.getDefaultOption(options);
-		let result;
-		if (Array.isArray(data)) result = await this.model.insertMany(data, options);
-		else result = await this.model.create([data], options);
+		const result = await (Array.isArray(data)
+			? this.model.insertMany(data, options)
+			: this.model.create([data], options));
 
 		return result;
 	}

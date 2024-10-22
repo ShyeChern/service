@@ -1,4 +1,4 @@
-const path = require('path');
+const path = require('node:path');
 const multer = require('multer');
 const { format } = require('date-fns');
 const { error: errorCode, file } = require('../constants');

@@ -13,13 +13,13 @@ module.exports.runMigrations = async (opts, db) => {
 	const existingMigrations = await migrationCollection.find().toArray();
 
 	for (const seed of seeds) {
-		if (existingSeeders.find((v) => v._id === seed.name)) continue;
+		if (existingSeeders.some((v) => v._id === seed.name)) continue;
 		await opts[seed.name](db);
 		await seederCollection.insertOne({ _id: seed.name, createdAt: new Date() });
 	}
 
 	for (const migration of migrations) {
-		if (existingMigrations.find((v) => v._id === migration.name)) continue;
+		if (existingMigrations.some((v) => v._id === migration.name)) continue;
 		await opts[migration.name](db);
 		await migrationCollection.insertOne({ _id: migration.name, createdAt: new Date() });
 	}

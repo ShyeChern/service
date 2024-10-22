@@ -1,7 +1,7 @@
 const { asValue } = require('awilix');
+const { security } = require('@chern_1997/utils');
 const ErrorBase = require('../base/error');
 const { error, cache, app } = require('../constants');
-const { security } = require('@chern_1997/utils');
 
 module.exports = async (req, res, next) => {
 	const whitelistUrl = {
@@ -23,15 +23,15 @@ module.exports = async (req, res, next) => {
 			currentUser: asValue(user),
 		});
 		req.container.cradle.userRepository.currentUser = user;
-	} catch (err) {
-		req.container.cradle.logger.info(err);
+	} catch (error) {
+		req.container.cradle.logger.info(error);
 
-		if (err instanceof ErrorBase) return next(err);
+		if (error instanceof ErrorBase) return next(error);
 
 		const params = {
 			statusCode: app.UNAUTHORIZED,
 		};
-		if (err.name === 'TokenExpiredError') params.code = error.TOKEN_EXPIRED;
+		if (error.name === 'TokenExpiredError') params.code = error.TOKEN_EXPIRED;
 
 		return next(new ErrorBase(req.__('error.unauthorized'), params));
 	}
