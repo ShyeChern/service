@@ -13,16 +13,16 @@ module.exports = class AuthService extends ServiceBase {
 	}
 
 	async login(data) {
-		const user = await this.userRepository.get({});
+		const user = await this.userRepository.get({ username: data.username });
 		if (!user) {
 			throw new BaseError(this.t('user.invalidCredential'));
 		}
 
-		const userPassword = Buffer.from(data.password, 'base64').toString('utf8');
-		if (!security.verifyHash(userPassword, user.password)) {
+		if (!security.verifyHash(data.password, user.password)) {
 			throw new BaseError(this.t('user.invalidCredential'));
 		}
 
+		// TODO: provide required info
 		const accessToken = security.generateToken(user);
 		const refreshToken = security.generateToken(user, { expiresIn: '1d', refresh: true });
 
