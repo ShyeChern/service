@@ -12,6 +12,11 @@ module.exports = class Base {
 		this.logger = opts.logger;
 	}
 
+	getEntity() {
+		const entity = this.constructor.name.replace(/(Service|Controller|Repository)$/, '');
+		return entity.charAt(0).toLowerCase() + entity.slice(1);
+	}
+
 	async validate(schema, data, options = {}) {
 		options = {
 			abortEarly: false,

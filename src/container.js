@@ -46,6 +46,7 @@ container.loadModules(
 		['./src/*/*/*.controller.js', { register: asClass, lifetime: Lifetime.SCOPED }],
 		['./src/*/*/*.service.js', { register: asClass, lifetime: Lifetime.SCOPED }],
 		['./src/*/*/*.repository.js', { register: asClass, lifetime: Lifetime.SCOPED }],
+		['./src/*/*/*.validator.js', { register: asClass, lifetime: Lifetime.SINGLETON }],
 		['./src/*/*/*.model.js', { register: asValue, lifetime: Lifetime.SINGLETON }],
 		['./src/databases/seeders/*.seeder.js', { register: asValue, lifetime: Lifetime.SINGLETON }],
 		[
