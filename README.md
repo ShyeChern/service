@@ -27,6 +27,7 @@ TODO:
 - joi validation message
 
 https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+https://github.com/api1st/httprun
 
 jest test only specific file(s) (match regex pattern)
 npm test -- tests/utils/security.test.js

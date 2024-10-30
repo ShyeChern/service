@@ -1,0 +1,50 @@
+### 
+GET {{baseUrl}}v1/users?limit=2&page=1&sorts[]=_id,-1
+Authorization: {{authToken}}
+
+
+###
+POST {{baseUrl}}v1/users
+Authorization: {{authToken}}
+
+{
+  "username": "username_{{$timestamp}}",
+  "password": "Testing@123"
+}
+
+### Create user multipart
+POST {{baseUrl}}v1/users
+Authorization: {{authToken}}
+Content-Type: multipart/form-data; boundary=Boundary
+
+--Boundary
+Content-Disposition: form-data; name="username"
+
+john_doe
+--Boundary
+Content-Disposition: form-data; name="profileImage"; filename="profile_image.png"
+Content-Type: image/png
+
+< ../../data/200x100.png
+--Boundary--
+
+
+###
+# @name getUser
+@getId=66c488451c3f85491967d096
+GET {{baseUrl}}v1/users/{{getId}}
+Authorization: {{authToken}}
+
+###
+@patchId=66c488451c3f85491967d096
+PATCH {{baseUrl}}v1/users/{{patchId}}
+Authorization: {{authToken}}
+
+{
+  "updatedAt": "{{getUser.response.body.updatedAt}}"
+}
+
+###
+@deleteId=670a533103b68b5c432aa289
+DELETE {{baseUrl}}v1/users/{{deleteId}}
+Authorization: {{authToken}}

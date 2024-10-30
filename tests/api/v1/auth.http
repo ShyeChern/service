@@ -1,0 +1,6 @@
+POST {{baseUrl}}v1/auth/login
+
+{
+  "username": "username_1729600743",
+  "password": "Testing@123"
+}

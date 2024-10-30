@@ -5,5 +5,18 @@
 	"editor.defaultFormatter": "esbenp.prettier-vscode",
 	"editor.formatOnSave": true,
 	"editor.tabSize": 2,
-	"js/ts.implicitProjectConfig.checkJs": true
+	"js/ts.implicitProjectConfig.checkJs": true,
+	"rest-client.defaultHeaders": {
+		"User-Agent": "vscode-restclient",
+		"Accept-Encoding": "gzip",
+		"Accept-Language": "en;q=1.0,cn;q=0.8",
+		"Content-Type": "application/json"
+	},
+	"rest-client.environmentVariables": {
+		"$shared": {},
+		"local": {
+			"baseUrl": "http://localhost:5000/api/",
+			"authToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyMyIsIm5hbWUiOiI0NTYiLCJ1c2VybmFtZSI6ImFkbWluIiwicGFzc3dvcmQiOiJQQHNzdzByZCIsImlhdCI6MTcxMjkzMjY4MCwiaXNzIjoic2VydmljZSJ9.0O0wFxm6aM8yaSrosKcHf99G9ApSRv7kX30aENUPDTQ"
+		}
+	}
 }
