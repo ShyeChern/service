@@ -48,6 +48,7 @@ container.loadModules(
 		['./src/*/*/*.repository.js', { register: asClass, lifetime: Lifetime.SCOPED }],
 		['./src/*/*/*.validator.js', { register: asClass, lifetime: Lifetime.SINGLETON }],
 		['./src/*/*/*.model.js', { register: asValue, lifetime: Lifetime.SINGLETON }],
+		['./src/*/*/*.route.js', { register: asValue, lifetime: Lifetime.SINGLETON }],
 		['./src/databases/seeders/*.seeder.js', { register: asValue, lifetime: Lifetime.SINGLETON }],
 		[
 			'./src/databases/migrations/*.migration.js',
@@ -57,6 +58,7 @@ container.loadModules(
 	{
 		formatName: (name, descriptor) => {
 			if (name.includes('.model')) return name;
+			if (name.includes('.route')) return name;
 			return descriptor.value.name ? string.toCamelCase(descriptor.value.name) : name;
 		},
 	},

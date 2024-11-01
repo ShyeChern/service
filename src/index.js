@@ -10,6 +10,7 @@ const compression = require('compression');
 const cookieParser = require('cookie-parser');
 const middleware = require('./middlewares');
 const container = require('./container');
+const routes = require('./routes');
 const port = process.env.PORT;
 
 (async () => {
@@ -31,7 +32,7 @@ const port = process.env.PORT;
 	app.use(middleware.logger);
 	app.use(middleware.cache);
 	app.use(cookieParser(process.env.COOKIE_SIGNAGURE));
-	app.use(require('./routes'));
+	app.use(routes(container.cradle));
 	app.use(middleware.error);
 
 	await container.cradle.init();

@@ -1,9 +1,7 @@
-const { string } = require('@chern_1997/utils');
 const UserController = require('./users.controller');
 
-module.exports = {
-	name: string.toCamelCase(UserController.name),
-	routes: [
+module.exports = class UserRoute {
+	static routes = [
 		{
 			path: '/users',
 			get: [UserController.prototype.getAll.name],
@@ -15,5 +13,5 @@ module.exports = {
 			patch: [UserController.prototype.update.name],
 			delete: [UserController.prototype.delete.name],
 		},
-	],
+	];
 };
