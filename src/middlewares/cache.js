@@ -17,7 +17,7 @@ module.exports = (req, res, next) => {
 		return res.send(responseBody);
 	};
 
-	if (cache) {
+	if (cache && req.method === 'GET') {
 		res.send(cache);
 		return;
 	}
