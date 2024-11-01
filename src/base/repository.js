@@ -59,13 +59,20 @@ module.exports = class RepositoryBase extends Base {
 		return { data, count, totalPage: Math.ceil(count / options.limit) };
 	}
 
-	async aggregate(pipeline, options = {}) {
+	async aggregate(pipelines, options = {}) {
 		options = this.getDefaultOption(options);
-		// TODO: transform data?
-		const result = await this.model.aggregate(pipeline, options);
+		if (options.id !== false) {
+			pipelines.push({ $addFields: { id: '$_id' } }, { $project: { _id: 0, __v: 0 } });
+		}
+		const result = await this.model.aggregate(pipelines, options);
 		return result;
 	}
 
+	/**
+	 * TODO: add custom options
+	 * @param {Array|Object} data
+	 * @param {import('mongoose').CreateOptions&import('mongoose').InsertManyOptions} options
+	 */
 	async create(data, options = {}) {
 		options = this.getDefaultOption(options);
 		const result = await (Array.isArray(data)
