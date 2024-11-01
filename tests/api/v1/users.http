@@ -22,6 +22,10 @@ Content-Disposition: form-data; name="username"
 
 john_doe
 --Boundary
+Content-Disposition: form-data; name="password"
+
+Testing@123
+--Boundary
 Content-Disposition: form-data; name="profileImage"; filename="profile_image.png"
 Content-Type: image/png
 
@@ -31,12 +35,12 @@ Content-Type: image/png
 
 ###
 # @name getUser
-@getId=66c488451c3f85491967d096
+@getId=6724c372ca8f26f735ec76e6
 GET {{baseUrl}}v1/users/{{getId}}
 Authorization: {{authToken}}
 
 ###
-@patchId=66c488451c3f85491967d096
+@patchId=6724c372ca8f26f735ec76e6
 PATCH {{baseUrl}}v1/users/{{patchId}}
 Authorization: {{authToken}}
 

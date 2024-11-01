@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
+// TODO: use container opts
 const datas = [require('./auth/auth.route'), require('./users/users.route')];
 
 const handler = (controller, methodName) => {

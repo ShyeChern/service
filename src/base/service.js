@@ -11,7 +11,7 @@ module.exports = class ServiceBase extends Base {
 		if (new Date(prevValue.updatedAt).getTime() > new Date(newValue.updatedAt).getTime()) {
 			throw new ErrorBase(this.t('validation.concurrency'));
 		}
-		delete newValue.updatedBy;
+		delete newValue.updatedAt;
 	}
 
 	getRepository() {

@@ -1,4 +1,5 @@
 {
 	"invalidCredential": "Invalid username or password",
-	"notFound": "User not found"
+	"notFound": "User not found",
+	"usernameExists": "Username ({{username}}) already exists"
 }

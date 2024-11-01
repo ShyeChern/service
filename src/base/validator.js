@@ -29,3 +29,7 @@ module.exports.excel = Joi.object({
 module.exports.image = Joi.object({
 	mimetype: Joi.string().required().valid(fileConst.MIME_TYPE.JPEG, fileConst.MIME_TYPE.PNG),
 }).concat(file);
+
+module.exports.concurrency = Joi.object({
+	updatedAt: Joi.date().required(),
+});
