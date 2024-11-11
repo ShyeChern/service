@@ -32,22 +32,18 @@ module.exports = class Base {
 
 		if (!error) return value;
 
-		// TODO: change to object
-		const errors = error.details.map((v) => ({
-			message: v.message,
-			type: v.type,
-			value: v.context.value,
-			key: v.path.reduce((acc, cur) => {
-				if (typeof cur === 'string') {
-					if (acc) acc += '.';
-					acc += cur;
-				} else {
-					acc += `[${cur}]`;
-				}
-				return acc;
-			}, ''),
-		}));
-		throw new ErrorBase(this.t('validation.error'), { code: errorCode.VALIDATION_ERROR, errors });
+		const errorMap = array.groupBy(error.details, {
+			converter: (v) => v.path.join('.'),
+			mapper: (v) => ({
+				message: v.message,
+				value: v.context.value,
+			}),
+		});
+
+		throw new ErrorBase(this.t('validation.error'), {
+			code: errorCode.VALIDATION_ERROR,
+			error: errorMap,
+		});
 	}
 
 	async validateFile(req, res, options = {}) {
@@ -85,13 +81,12 @@ module.exports = class Base {
 							this.t('validation.fileLimitExceeded', {
 								fileSize: `${Math.round(fileSize / file.SIZE['1MB'])}MB`,
 							}),
-							[
-								{
-									message: err.message,
-									type: err.code,
-									key: err.field,
+							{
+								code: err.code,
+								error: {
+									[err.field]: [{ message: err.message }],
 								},
-							],
+							},
 						),
 					);
 				} else if (err) {

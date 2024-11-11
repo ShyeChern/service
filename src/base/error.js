@@ -1,17 +1,15 @@
 const { app } = require('../constants');
 module.exports = class ErrorBase extends Error {
+	/**
+	 * @param {String} message
+	 * @param {*} params
+	 */
 	constructor(message, params) {
 		super(message);
 		this.processParams(params);
 	}
 
 	processParams(params) {
-		if (Array.isArray(params)) {
-			this.setErrors(params);
-			this.setStatusCode(app.BAD_REQUEST);
-			return;
-		}
-
 		if (typeof params === 'string') {
 			this.setCode(params);
 			this.setStatusCode(app.BAD_REQUEST);
@@ -24,7 +22,7 @@ module.exports = class ErrorBase extends Error {
 		}
 
 		this.setStatusCode(params?.statusCode ?? app.BAD_REQUEST);
-		this.setErrors(params?.errors);
+		this.setError(params?.error);
 		this.setCode(params?.code);
 	}
 
@@ -32,8 +30,8 @@ module.exports = class ErrorBase extends Error {
 		this.statusCode = statusCode;
 	}
 
-	setErrors(errors) {
-		this.errors = errors;
+	setError(error) {
+		this.error = error;
 	}
 
 	setCode(code) {

@@ -6,7 +6,7 @@ module.exports = (err, req, res, next) => {
 	if (err instanceof ErrorBase) {
 		return res
 			.status(err.statusCode)
-			.send({ message: err.message, code: err.code, errors: err.errors });
+			.send({ message: err.message, code: err.code, error: err.error });
 	}
 	req.container.cradle.logger.error('error middleware', err);
 	const errorResponse = {
