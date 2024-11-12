@@ -1,8 +1,12 @@
 const { app } = require('../constants');
 module.exports = class ErrorBase extends Error {
 	/**
-	 * @param {String} message
-	 * @param {*} params
+	 * @typedef {object} ErrorParam
+	 * @property {number} [statusCode]
+	 * @property {string} [code]
+	 * @property {object} [error]
+	 * @param {string} message
+	 * @param {string|number|ErrorParam} [params]
 	 */
 	constructor(message, params) {
 		super(message);

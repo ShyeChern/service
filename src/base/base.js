@@ -27,6 +27,7 @@ module.exports = class Base {
 			},
 			stripUnknown: true,
 			...options,
+			context: { t: this.t, ...options?.context },
 		};
 		const { value, error } = await schema.validate(data, options);
 
