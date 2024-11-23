@@ -1,9 +1,7 @@
-const { security } = require('@chern_1997/utils');
-const ErrorBase = require('../../base/error');
-const ServiceBase = require('../../base/service');
+const { security, express, BaseError } = require('@chern_1997/utils');
 const { app } = require('../../constants');
 
-module.exports = class UserService extends ServiceBase {
+module.exports = class UserService extends express.ServiceBase {
 	/**
 	 * @param {Object} opts
 	 * @param {import('./users.repository')} opts.userRepository
@@ -16,7 +14,7 @@ module.exports = class UserService extends ServiceBase {
 	async create(data) {
 		const user = await this.userRepository.get({ username: data.username });
 		if (user) {
-			throw new ErrorBase(this.t('user.usernameExists', { username: data.username }), app.CONFLICT);
+			throw new BaseError(this.t('user.usernameExists', { username: data.username }), app.CONFLICT);
 		}
 		data.password = security.hash(data.password);
 		const result = await this.userRepository.create(data);

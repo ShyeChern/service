@@ -1,8 +1,7 @@
-const { object } = require('@chern_1997/utils');
-const ServiceBase = require('../../base/service');
+const { object, express } = require('@chern_1997/utils');
 const { app } = require('../../constants');
 
-module.exports = class AuditService extends ServiceBase {
+module.exports = class AuditService extends express.ServiceBase {
 	/**
 	 * @param {Object} opts
 	 * @param {import('express').Request} opts.req

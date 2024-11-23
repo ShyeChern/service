@@ -1,9 +1,8 @@
-const RepositoryBase = require('../../base/repository');
-const BaseError = require('../../base/error');
+const { express, BaseError } = require('@chern_1997/utils');
 const { app } = require('../../constants');
 const model = require('./users.model');
 
-module.exports = class UserRepository extends RepositoryBase {
+module.exports = class UserRepository extends express.RepositoryBase {
 	constructor(opts) {
 		super(model, opts);
 	}

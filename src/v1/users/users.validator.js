@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const validator = require('../../base/validator');
+const { validator } = require('@chern_1997/utils');
 
 module.exports = class UserValidator {
 	create = Joi.object({

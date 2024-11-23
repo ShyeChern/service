@@ -1,6 +1,5 @@
 const { asValue } = require('awilix');
-const { security } = require('@chern_1997/utils');
-const ErrorBase = require('../base/error');
+const { security, BaseError } = require('@chern_1997/utils');
 const { error, cache, app } = require('../constants');
 
 module.exports = async (req, res, next) => {
@@ -11,7 +10,7 @@ module.exports = async (req, res, next) => {
 	if (whitelistUrl[req.originalUrl]) return next();
 
 	if (!req.headers.authorization) {
-		return next(new ErrorBase(req.__('error.unauthorized'), app.UNAUTHORIZED));
+		return next(new BaseError(req.__('error.unauthorized'), app.UNAUTHORIZED));
 	}
 
 	try {
@@ -26,14 +25,14 @@ module.exports = async (req, res, next) => {
 	} catch (error) {
 		req.container.cradle.logger.info(error);
 
-		if (error instanceof ErrorBase) return next(error);
+		if (error instanceof BaseError) return next(error);
 
 		const params = {
 			statusCode: app.UNAUTHORIZED,
 		};
 		if (error.name === 'TokenExpiredError') params.code = error.TOKEN_EXPIRED;
 
-		return next(new ErrorBase(req.__('error.unauthorized'), params));
+		return next(new BaseError(req.__('error.unauthorized'), params));
 	}
 	return next();
 };

@@ -1,7 +1,7 @@
-const ControllerBase = require('../../base/controller');
+const { express } = require('@chern_1997/utils');
 const { app, file } = require('../../constants');
 
-module.exports = class UserController extends ControllerBase {
+module.exports = class UserController extends express.ControllerBase {
 	/**
 	 * @param {Object} opts
 	 * @param {import('./users.service')} opts.userService

@@ -1,9 +1,9 @@
-const ErrorBase = require('../base/error');
+const { BaseError } = require('@chern_1997/utils');
 const { app } = require('../constants');
 
 // eslint-disable-next-line no-unused-vars
 module.exports = (err, req, res, next) => {
-	if (err instanceof ErrorBase) {
+	if (err instanceof BaseError) {
 		return res
 			.status(err.statusCode)
 			.send({ message: err.message, code: err.code, error: err.error });

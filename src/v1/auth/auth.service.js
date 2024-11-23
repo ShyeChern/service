@@ -1,8 +1,6 @@
-const { security } = require('@chern_1997/utils');
-const ServiceBase = require('../../base/service');
-const BaseError = require('../../base/error');
+const { security, express, BaseError } = require('@chern_1997/utils');
 
-module.exports = class AuthService extends ServiceBase {
+module.exports = class AuthService extends express.ServiceBase {
 	/**
 	 * @param {Object} opts - options
 	 * @param {import('../users/users.repository')} opts.userRepository

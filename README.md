@@ -23,6 +23,8 @@ TODO:
 - k8s setup
 - joi validation message
 - execute script npx @chern_1997/utils xx
+- move to utils?
+- openapi?
 
 https://marketplace.visualstudio.com/items?itemName=humao.rest-client
 https://github.com/api1st/httprun
