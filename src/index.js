@@ -8,8 +8,10 @@ const helmet = require('helmet');
 const { rateLimit } = require('express-rate-limit');
 const compression = require('compression');
 const cookieParser = require('cookie-parser');
+const {
+	express: { container },
+} = require('@chern_1997/utils');
 const middleware = require('./middlewares');
-const container = require('./container');
 const routes = require('./routes');
 const port = process.env.PORT;
 
@@ -32,10 +34,9 @@ const port = process.env.PORT;
 	app.use(middleware.logger);
 	app.use(middleware.cache);
 	app.use(cookieParser(process.env.COOKIE_SIGNAGURE));
+	await container.cradle.init();
 	app.use(routes(container.cradle));
 	app.use(middleware.error);
-
-	await container.cradle.init();
 
 	app.listen(port, () => {
 		console.log(`Listening on port ${port}`);
