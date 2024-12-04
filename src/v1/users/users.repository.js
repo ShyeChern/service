@@ -1,5 +1,4 @@
 const { express, BaseError } = require('@chern_1997/utils');
-const { app } = require('../../constants');
 const model = require('./users.model');
 
 module.exports = class UserRepository extends express.RepositoryBase {

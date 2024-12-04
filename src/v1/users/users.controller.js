@@ -1,5 +1,5 @@
-const { express } = require('@chern_1997/utils');
-const { app, file } = require('../../constants');
+const { express, constants } = require('@chern_1997/utils');
+const { file } = require('../../constants');
 
 module.exports = class UserController extends express.ControllerBase {
 	/**
@@ -28,7 +28,7 @@ module.exports = class UserController extends express.ControllerBase {
 				data.profileImage = data.profileImage[0].path;
 			}
 			const user = await this.userService.create(data);
-			return res.status(app.CREATED).send(user);
+			return res.status(constants.app.CREATED).send(user);
 		} catch (error) {
 			next(error);
 		}

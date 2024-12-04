@@ -1,5 +1,4 @@
-const { security, express, BaseError } = require('@chern_1997/utils');
-const { app } = require('../../constants');
+const { security, express, BaseError, constants } = require('@chern_1997/utils');
 
 module.exports = class UserService extends express.ServiceBase {
 	/**
@@ -14,7 +13,10 @@ module.exports = class UserService extends express.ServiceBase {
 	async create(data) {
 		const user = await this.userRepository.get({ username: data.username });
 		if (user) {
-			throw new BaseError(this.t('user.usernameExists', { username: data.username }), app.CONFLICT);
+			throw new BaseError(
+				this.t('user.usernameExists', { username: data.username }),
+				constants.app.CONFLICT,
+			);
 		}
 		data.password = security.hash(data.password);
 		const result = await this.userRepository.create(data);
