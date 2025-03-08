@@ -29,7 +29,7 @@
 		]
 	},
 	"dependencies": {
-		"@chern_1997/utils": "^0.5.0",
+		"@chern_1997/utils": "^0.5.2",
 		"date-fns": "^4.1.0",
 		"dotenv": "^16.4.5",
 		"joi": "^17.13.3",
