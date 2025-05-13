@@ -1,7 +1,7 @@
-const { express } = require('@chern_1997/utils');
+const { expressCore } = require('@chern_1997/utils');
 const authValidator = require('./auth.validator');
 
-module.exports = class AuthController extends express.ControllerBase {
+module.exports = class AuthController extends expressCore.ControllerBase {
 	/**
 	 * Authentication controller
 	 *

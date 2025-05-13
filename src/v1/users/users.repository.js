@@ -1,7 +1,7 @@
-const { express, BaseError } = require('@chern_1997/utils');
+const { expressCore, BaseError } = require('@chern_1997/utils');
 const model = require('./users.model');
 
-module.exports = class UserRepository extends express.RepositoryBase {
+module.exports = class UserRepository extends expressCore.RepositoryBase {
 	constructor(opts) {
 		super(model, opts);
 	}
